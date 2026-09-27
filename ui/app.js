@@ -43,12 +43,26 @@
     }
   }
 
+  /* The thread grows with the page, so each new message is scrolled into view
+   * rather than scrolling an inner box. */
+  function reveal(el) {
+    if (el && el.scrollIntoView) {
+      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+
+  /* The input grows with its text up to the CSS max-height. */
+  function fit() {
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+  }
+
   function addUser(text) {
     var el = document.createElement("p");
     el.className = "bubble user";
     el.textContent = text;
     thread.appendChild(el);
-    thread.scrollTop = thread.scrollHeight;
+    reveal(thread.lastElementChild);
   }
 
   function addPending() {
@@ -56,7 +70,7 @@
     el.className = "bubble pending";
     el.textContent = "Looking in the sources...";
     thread.appendChild(el);
-    thread.scrollTop = thread.scrollHeight;
+    reveal(thread.lastElementChild);
     return el;
   }
 
@@ -89,7 +103,9 @@
       a.href = url;
       a.rel = "noopener noreferrer nofollow";
       a.target = "_blank";
-      a.textContent = (payload.citation.label || "Source") + " - open the official page";
+      // A refusal's link is educational, not the source of an answer.
+      a.textContent = (payload.route === "answer" ? "Source: " : "Learn more: ") +
+        (payload.citation.label || "official page");
       wrap.appendChild(a);
     }
 
@@ -108,7 +124,7 @@
     }
 
     thread.appendChild(wrap);
-    thread.scrollTop = thread.scrollHeight;
+    reveal(thread.lastElementChild);
   }
 
   function addNotice(message) {
@@ -116,7 +132,7 @@
     el.className = "bubble notice";
     el.textContent = message;
     thread.appendChild(el);
-    thread.scrollTop = thread.scrollHeight;
+    reveal(thread.lastElementChild);
   }
 
   function ask(question) {
@@ -163,8 +179,20 @@
       return;
     }
     input.value = "";
+    fit();
     ask(question);
   });
+
+  /* Enter sends, Shift+Enter starts a new line. */
+  input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
+      event.preventDefault();
+      if (!button.disabled) {
+        form.requestSubmit ? form.requestSubmit() : button.click();
+      }
+    }
+  });
+  input.addEventListener("input", fit);
 
   /* P5 pitfall: the examples are fixed in config. Clicking one fills the input
    * rather than sending immediately, so the demo can be narrated before the
@@ -173,6 +201,7 @@
   Array.prototype.forEach.call(examples, function (el) {
     el.addEventListener("click", function () {
       input.value = el.getAttribute("data-question") || "";
+      fit();
       input.focus();
     });
   });

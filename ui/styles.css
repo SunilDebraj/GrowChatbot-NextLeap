@@ -1,122 +1,343 @@
+/* Visual language modelled on a clean retail-investing app: mint-green accent,
+   white cards on a soft grey page, pill chips, slate text, generous spacing.
+   Everything is local - the CSP allows styles from 'self' only, and no web font
+   is loaded, so the system font stack stands in for a brand typeface. */
+
 :root {
-  --ink: #1b2430;
-  --muted: #5b6b7c;
-  --line: #d7dee6;
-  --bg: #f6f8fa;
+  --mint: #00d09c;          /* brand accent: marks, rings, tints */
+  --green: #00866a;         /* text-bearing green: buttons, links (AA on white) */
+  --green-hover: #006e57;
+  --mint-tint: #e6faf5;
+  --ink: #44475b;
+  --ink-strong: #121212;
+  --muted: #7c7e8c;
+  --line: #e9e9eb;
+  --page: #f8f8f8;
   --card: #ffffff;
-  --accent: #0b5cab;
-  --refusal: #7a4b00;
-  --refusal-bg: #fff6e6;
+  --user-bubble: #e6faf5;
+  --refusal-ink: #8a5a00;
+  --refusal-bg: #fff8ec;
+  --refusal-line: #f3dfb5;
+  --shadow: 0 1px 2px rgba(18, 18, 18, 0.04), 0 4px 16px rgba(18, 18, 18, 0.05);
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mint: #00d09c;
+    --green: #00d09c;
+    --green-hover: #33dcb0;
+    --mint-tint: #0f2b25;
+    --ink: #d1d3dc;
+    --ink-strong: #f5f5f7;
+    --muted: #9a9cab;
+    --line: #2c2e36;
+    --page: #121212;
+    --card: #1c1d22;
+    --user-bubble: #13342c;
+    --refusal-ink: #f0c56b;
+    --refusal-bg: #2a2416;
+    --refusal-line: #4a3d1d;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
+  }
+  #ask-button { color: #0b1f1a; }
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  padding: 0 1rem 3rem;
-  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--ink);
-  background: var(--bg);
+  background: var(--page);
+  -webkit-font-smoothing: antialiased;
 }
 
-main, header, footer { max-width: 46rem; margin: 0 auto; }
+/* ---- top bar ------------------------------------------------------------ */
 
-.banner { padding: 1.75rem 0 0.5rem; }
-.banner h1 { margin: 0; font-size: 1.4rem; }
-.banner p { margin: 0.35rem 0 0; color: var(--muted); }
-
-/* The persistent facts-only note (PRD FR7). Loud enough to survive being
-   scrolled past, quiet enough not to look like an error. */
-.facts-only {
-  margin: 1rem auto;
-  padding: 0.55rem 0.85rem;
-  border-left: 4px solid var(--accent);
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink-strong);
+  letter-spacing: -0.01em;
+}
+/* A plain geometric mark - deliberately not any real company's logo. */
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, var(--mint), #5367ff 55%, var(--mint));
+  box-shadow: inset 0 0 0 6px var(--card);
+}
+.topbar-tag {
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: var(--mint-tint);
+  color: var(--green);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---- layout ------------------------------------------------------------- */
+
+.shell {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 1rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ---- hero --------------------------------------------------------------- */
+
+.hero { padding: 1.5rem 1.5rem 1.25rem; }
+.hero h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: var(--ink-strong);
+  letter-spacing: -0.02em;
+}
+.hero .scope { margin: 0.4rem 0 0; color: var(--muted); }
+
+/* The persistent facts-only note (PRD FR7): a calm badge, not an alert. */
+.facts-only {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: var(--mint-tint);
+  color: var(--green);
+  font-size: 0.85rem;
   font-weight: 600;
 }
+.facts-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mint);
+}
 
-.examples h2 { margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--muted); }
+/* ---- example chips ------------------------------------------------------ */
+
+.examples h2 {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 .example {
-  display: block;
-  width: 100%;
-  margin: 0 0 0.4rem;
-  padding: 0.6rem 0.75rem;
+  padding: 0.5rem 0.95rem;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 999px;
   background: var(--card);
-  color: var(--accent);
+  color: var(--ink);
   font: inherit;
+  font-size: 0.9rem;
   text-align: left;
   cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
-.example:hover { border-color: var(--accent); }
-.example:focus-visible, #ask-button:focus-visible, textarea:focus-visible {
-  outline: 2px solid var(--accent);
+.example:hover {
+  border-color: var(--mint);
+  color: var(--green);
+  background: var(--mint-tint);
+}
+
+.example:focus-visible,
+#ask-button:focus-visible,
+.citation:focus-visible {
+  outline: 2px solid var(--mint);
   outline-offset: 2px;
 }
 
-#ask-form { display: flex; gap: 0.5rem; margin-top: 1.25rem; align-items: stretch; }
+/* ---- thread ------------------------------------------------------------- */
 
-textarea {
-  flex: 1;
-  padding: 0.6rem;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  font: inherit;
-  resize: vertical;
+.thread {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
 }
-
-#ask-button {
-  padding: 0 1.4rem;
-  border: 0;
-  border-radius: 6px;
-  background: var(--accent);
-  color: #fff;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-#ask-button[disabled] { opacity: 0.55; cursor: progress; }
-
-.reminder { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.85rem; }
-
-.thread { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
 .thread:empty { display: none; }
 
 .bubble {
   margin: 0;
-  padding: 0.7rem 0.85rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--card);
-  max-width: 42rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius);
+  max-width: 40rem;
   overflow-wrap: anywhere;
 }
 
-.bubble.user { align-self: flex-end; background: #e8f0fa; }
-.bubble.pending, .bubble.notice { color: var(--muted); font-style: italic; }
+.bubble.user {
+  align-self: flex-end;
+  background: var(--user-bubble);
+  color: var(--ink-strong);
+  border-bottom-right-radius: 4px;
+}
 
-.bubble.answer.refusal { border-color: #e6c48a; background: var(--refusal-bg); }
-.bubble .body { margin: 0; white-space: pre-wrap; }
+.bubble.answer {
+  align-self: flex-start;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  border-bottom-left-radius: 4px;
+}
+.bubble .body { margin: 0; white-space: pre-wrap; color: var(--ink-strong); }
 
-.citation { display: inline-block; margin-top: 0.5rem; font-size: 0.9rem; }
-.stamp { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.8rem; }
+.bubble.pending,
+.bubble.notice {
+  align-self: flex-start;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  color: var(--muted);
+}
+
+.bubble.answer.refusal {
+  background: var(--refusal-bg);
+  border-color: var(--refusal-line);
+  box-shadow: none;
+}
+
+.citation {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--green);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.citation::after { content: "\2197"; font-weight: 400; }
+.citation:hover { border-color: var(--mint); background: var(--mint-tint); }
+
+.stamp { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.78rem; }
+
 .refusal-footer {
-  margin: 0.6rem 0 0;
-  padding-top: 0.5rem;
-  border-top: 1px solid #e6c48a;
-  color: var(--refusal);
+  margin: 0.75rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--refusal-line);
+  color: var(--refusal-ink);
   font-size: 0.8rem;
   font-weight: 600;
 }
 
-.disclaimer {
-  margin-top: 2.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
+/* ---- composer ----------------------------------------------------------- */
+
+.composer {
+  position: sticky;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.4rem 0.4rem 0.4rem 1.1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.composer:focus-within {
+  border-color: var(--mint);
+  box-shadow: 0 0 0 3px var(--mint-tint), var(--shadow);
+}
+
+textarea {
+  flex: 1;
+  min-height: 2.4rem;
+  max-height: 8rem;
+  padding: 0.5rem 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ink-strong);
+  font: inherit;
+  resize: none;
+}
+textarea::placeholder { color: var(--muted); }
+
+#ask-button {
+  flex: none;
+  padding: 0.6rem 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+#ask-button:hover { background: var(--green-hover); }
+#ask-button[disabled] { opacity: 0.55; cursor: progress; }
+
+.reminder {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.6rem 0.25rem 0;
   color: var(--muted);
   font-size: 0.8rem;
+}
+.reminder-icon {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* ---- footer ------------------------------------------------------------- */
+
+.disclaimer {
+  max-width: 48rem;
+  margin: 2rem auto 0;
+  padding: 1.25rem 1rem 2.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
 }
 .disclaimer p { margin: 0; }
 
@@ -130,4 +351,16 @@ textarea {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ---- small screens ------------------------------------------------------ */
+
+@media (max-width: 520px) {
+  .hero { padding: 1.25rem 1.1rem 1rem; }
+  .hero h1 { font-size: 1.25rem; }
+  .topbar-tag { display: none; }
+  .composer { border-radius: var(--radius); }
+  /* The no-PII placeholder wraps to two lines here; show both, not half. */
+  textarea { min-height: 3.4rem; }
+  #ask-button { padding: 0.6rem 1.1rem; }
 }

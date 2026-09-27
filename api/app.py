@@ -578,32 +578,41 @@ def _render_page(config: AppConfig, disclaimer: str) -> bytes:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>{html.escape(WELCOME)}</title>
 <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-<header class="banner">
-  <h1>{html.escape(WELCOME)}</h1>
-  <p>{html.escape(SCOPE_LINE)}</p>
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand"><span class="brand-mark" aria-hidden="true"></span>MF Facts</span>
+    <span class="topbar-tag">5 HDFC schemes</span>
+  </div>
 </header>
 
-<p class="facts-only">{html.escape(FACTS_ONLY)}</p>
-
-<main>
-  <section class="examples" aria-label="Example questions">
-    <h2>Try:</h2>
-{examples}
+<main class="shell">
+  <section class="hero card">
+    <h1>{html.escape(WELCOME)}</h1>
+    <p class="scope">{html.escape(SCOPE_LINE)}</p>
+    <p class="facts-only"><span class="facts-dot" aria-hidden="true"></span>{html.escape(FACTS_ONLY)}</p>
   </section>
 
-  <form id="ask-form" autocomplete="off" data-memory-turns="{int(config.memory.window_turns)}">
+  <section class="examples" aria-label="Example questions">
+    <h2>Popular questions</h2>
+    <div class="chips">
+{examples}
+    </div>
+  </section>
+
+  <section id="thread" class="thread" aria-live="polite" aria-label="Answers"></section>
+
+  <form id="ask-form" class="composer" autocomplete="off" data-memory-turns="{int(config.memory.window_turns)}">
     <label class="sr-only" for="question">Your question</label>
-    <textarea id="question" name="question" rows="2" maxlength="{config.api.max_question_length}"
+    <textarea id="question" name="question" rows="1" maxlength="{config.api.max_question_length}"
       placeholder="{html.escape(NO_PII_REMINDER, quote=True)}" required></textarea>
     <button type="submit" id="ask-button">Ask</button>
   </form>
-  <p class="reminder">{html.escape(NO_PII_REMINDER)}</p>
-
-  <section id="thread" class="thread" aria-live="polite" aria-label="Answers"></section>
+  <p class="reminder"><span class="reminder-icon" aria-hidden="true">!</span>{html.escape(NO_PII_REMINDER)}</p>
 </main>
 
 <footer class="disclaimer">
