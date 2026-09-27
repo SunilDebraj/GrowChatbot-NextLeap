@@ -2,8 +2,8 @@
 
 A facts-only Q&A assistant for five HDFC Asset Management mutual fund schemes,
 built as a retrieval-augmented generation (RAG) pipeline. It answers questions
-about expense ratio, exit load, ELSS lock-in, riskometer, benchmark and fund
-size in at most three sentences, with exactly one source link and a
+about expense ratio, exit load, minimum SIP and lump sum, ELSS lock-in,
+riskometer and benchmark in at most three sentences, with exactly one source link and a
 `Last updated from sources:` stamp. It refuses advice, performance, portfolio
 and PII-bearing questions with a templated message, and never asks the model
 to write one.
@@ -193,9 +193,8 @@ free-tier providers with a tokens-per-minute cap. The eval sets are data, in
 4. **PDF dependence.** Factsheets, KIM and SID are PDFs, and table extraction
    from PDFs is imperfect. In this build they could not be fetched at all
    (HTTP 403), so the corpus has 3 of the 8 planned document classes. How to
-   download a statement is not answerable, and neither is minimum SIP (the
-   overview locator does not capture it). The assistant refuses rather than
-   guessing. See `docs/corpus_gaps.md` and `artifacts/eval_report.md` §3.
+   download a statement is not answerable; the assistant refuses rather than
+   inventing steps. See `docs/corpus_gaps.md` and `artifacts/eval_report.md` §3.
 5. **MiniLM trade-off.** `all-MiniLM-L6-v2` is fast and local but weaker than
    larger models on finance-specific phrasing. Expect occasional misses on
    unusual wording.

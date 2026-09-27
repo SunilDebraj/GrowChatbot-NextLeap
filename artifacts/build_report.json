@@ -1,5 +1,5 @@
 {
-  "build_duration_s": 39.11,
+  "build_duration_s": 19.2,
   "chunks": 20,
   "chunks_per_doc_class": {
     "fees": 10,
@@ -40,8 +40,8 @@
     "repeat_table_headers": true,
     "target_tokens": 160
   },
-  "tokens_max": 66,
-  "tokens_mean": 40.0,
+  "tokens_max": 76,
+  "tokens_mean": 45.8,
   "tokens_min": 8,
-  "tokens_total": 800
+  "tokens_total": 915
 }

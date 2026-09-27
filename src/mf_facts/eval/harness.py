@@ -91,11 +91,17 @@ class Metrics:
             "strategy": self.strategy,
             "eval_set": self.eval_set,
             "n_items": self.n_items,
-            "hit@1": self.hit_at_1,
-            "hit@2": self.hit_at_2,
-            "hit@5": self.hit_at_5,
-            "grounded_accuracy": self.grounded_accuracy,
-            "table_fact_accuracy": self.table_fact_accuracy,
+            # Rounded: an unrounded 34/55 prints as a 16-digit repeating decimal,
+            # which the PII-at-rest scan rightly reads as an account number.
+            "hit@1": round(self.hit_at_1, 4),
+            "hit@2": round(self.hit_at_2, 4),
+            "hit@5": round(self.hit_at_5, 4),
+            "grounded_accuracy": round(self.grounded_accuracy, 4),
+            "table_fact_accuracy": (
+                round(self.table_fact_accuracy, 4)
+                if self.table_fact_accuracy is not None
+                else None
+            ),
             "mean_chunk_tokens": self.mean_chunk_tokens,
             "max_chunk_tokens": self.max_chunk_tokens,
             "build_time_s": self.build_time_s,

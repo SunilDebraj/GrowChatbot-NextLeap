@@ -761,7 +761,7 @@ Walked 2026-09-27 against the fresh `--refresh` build and a live generator
 | [x] | Four offline stages run end-to-end, individually inspectable | `python -m mf_facts.pipeline.build [--stage …]` log; `artifacts/build_report.json` | met |
 | [x] | `corpus_manifest.json` consistent with the collection | `artifacts/corpus_manifest.json` (20 chunks) = Chroma `indexed_chunks` 20 (`/api/health`); `tests/test_store_manifest_contract.py` | met |
 | [x] | Chunking chosen by evaluation, decision and numbers documented | `docs/chunking_decision.md` | met |
-| [ ] | All 5 schemes answerably indexed; **all 6 fact categories retrievable for each** | `artifacts/eval_report.md` §3.2 | **not met: minimum SIP missing (overview locator). Schemes indexed 5/5; statement download unsourced** |
+| [ ] | All 5 schemes answerably indexed; **all 6 fact categories retrievable for each** | `artifacts/eval_report.md` §3.2 | **5 of 6: minimum SIP fixed (locator, 5/5 live); statement download still unsourced (`docs/corpus_gaps.md`)** |
 | [x] | Every factual answer ≤3 sentences, one link, stamp | `artifacts/eval_report.md` §1: 81/81 on all three | met |
 | [x] | Opinion/portfolio/performance refused; performance links the official page with no numbers | `artifacts/eval_report.md` §2.3: 24/24, 10/10, 0 figures. Links the scheme page, because the factsheet is unsourced (`docs/corpus_gaps.md`) | met, with factsheet substitution |
 | [x] | PII set 100% refused, nothing persisted | 12/12; `tests/test_no_pii_at_rest.py`, `tests/test_pii_discards_value.py` | met |
@@ -772,5 +772,7 @@ Walked 2026-09-27 against the fresh `--refresh` build and a live generator
 | [ ] | Prototype link live, or ≤3-min demo video | `docs/demo_script.md` beat sheet | **open: OQ5 undecided; video not recorded** |
 | [x] | Eval harness run; §9.2 targets met or deviations documented | `artifacts/eval_report.md` | met: factual grounded accuracy 80% < 90%, documented in §3.1 |
 
-**Escalated, not dropped:** minimum-SIP coverage (fixable with a locator edit and
-rebuild) and the demo link/video (OQ5, needs the owner).
+**Escalated, not dropped:** statement-download coverage (needs a rendering fetcher
+or an AMC source) and the demo link/video (OQ5, needs the owner). Minimum SIP was
+fixed. `artifacts/sample_qa.md` #3 still shows the pre-fix refusal and must be
+regenerated once the provider's daily quota resets.

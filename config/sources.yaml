@@ -33,7 +33,7 @@ schemes:
     scheme_name: HDFC Large Cap Fund - Direct Growth
     url: https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth
     specs:
-      - {source_id: lc_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: lc_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:|Min. for SIP|Min. for 1st investment|Min. for 2nd investment"}
       - {source_id: lc_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
       - source_id: lc_faq
         doc_class: faq
@@ -49,7 +49,7 @@ schemes:
     scheme_name: HDFC Equity (Flexi Cap) Fund - Direct Growth
     url: https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth
     specs:
-      - {source_id: fx_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: fx_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:|Min. for SIP|Min. for 1st investment|Min. for 2nd investment"}
       - {source_id: fx_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
       - source_id: fx_faq
         doc_class: faq
@@ -68,7 +68,7 @@ schemes:
     # recorded in sources.csv from the pre-correction probe.
     url: https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth
     specs:
-      - {source_id: el_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: el_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:|Min. for SIP|Min. for 1st investment|Min. for 2nd investment"}
       - {source_id: el_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
       - source_id: el_faq
         doc_class: faq
@@ -84,7 +84,7 @@ schemes:
     scheme_name: HDFC Small Cap Fund - Direct Growth
     url: https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth
     specs:
-      - {source_id: sc_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: sc_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:|Min. for SIP|Min. for 1st investment|Min. for 2nd investment"}
       - {source_id: sc_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
       - source_id: sc_faq
         doc_class: faq
@@ -100,7 +100,7 @@ schemes:
     scheme_name: HDFC Balanced Advantage Fund - Direct Growth
     url: https://groww.in/mutual-funds/hdfc-balanced-advantage-fund-direct-growth
     specs:
-      - {source_id: ba_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: ba_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:|Min. for SIP|Min. for 1st investment|Min. for 2nd investment"}
       - {source_id: ba_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
       - source_id: ba_faq
         doc_class: faq

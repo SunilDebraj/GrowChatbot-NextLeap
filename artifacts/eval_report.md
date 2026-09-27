@@ -9,7 +9,7 @@ still open at the time.
 |---|---|
 | Date | 2026-09-27 |
 | Generator | `chat_completions` / `qwen/qwen3.8-27b`, temperature 0, max_tokens 180 |
-| Corpus | `mf_facts_v1`, version `2026-09-27T14:09:43+00:00`, 15 docs, 20 chunks, fresh `--refresh` build |
+| Corpus | `mf_facts_v1`, 15 docs, 20 chunks, fresh `--refresh` builds. Re-built after the minimum-SIP locator fix (§3.2), tokens max 76 |
 | Chunking | `heading_aware` (see `docs/chunking_decision.md`) |
 | Test suite | `pytest -q`: 440 passed |
 
@@ -17,7 +17,7 @@ still open at the time.
 
 | PRD §9.2 metric | Target | Result | Verdict |
 |---|---|---|---|
-| Grounded factual accuracy | ≥ 90% | factual **80.0%** (40/50) · table facts 100% (20/20) · how-to 90.5% (19/21) | **missed on factual. See 3.1** |
+| Grounded factual accuracy | ≥ 90% | factual **81.8%** (45/55, after the min-SIP fix) · table facts 100% (20/20) · how-to 90.5% (19/21) | **missed on factual. See 3.1** |
 | Exactly one valid source link, factual answers | 100% | 100% (81/81 answered) | met |
 | Answer ≤ 3 sentences | 100% | 100% (81/81 answered) | met |
 | `Last updated from sources:` stamp present | 100% | 100% (81/81 answered) | met |
@@ -28,8 +28,8 @@ still open at the time.
 | End-to-end p95 latency | ≤ 8 s | 1.04–1.72 s per set | met |
 
 Additional `PRD.md` §13 criterion measured here: **"all 6 fact categories
-retrievable for each scheme"** — **not met.** Minimum SIP is not in the corpus.
-See 3.2.
+retrievable for each scheme"** — five of six met. Minimum SIP was fixed (§3.2);
+statement download remains unsourced (`docs/corpus_gaps.md`).
 
 ## 2. Results by eval set
 
@@ -39,9 +39,16 @@ See 3.2.
 
 | Set | n | answered | grounded | fact in top-4 | one link | ≤3 sent | stamped | unsupported nums | p95 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| factual | 50 | 80.0% (40) | 80.0% | 80.0% | 100% | 100% | 100% | 0 | 1687 ms |
+| factual (re-run, 55 items) | 55 | 81.8% (45) | 81.8% | 81.8% | 100% | 100% | 100% | 0 | 1667 ms |
+| factual (first run, 50 items) | 50 | 80.0% (40) | 80.0% | 80.0% | 100% | 100% | 100% | 0 | 1687 ms |
 | table_facts | 20 | 100% (20) | 100% | 100% | 100% | 100% | 100% | 0 | 1719 ms |
 | howto | 21 | 100% (21) | 90.5% | 100% | 100% | 100% | 100% | 0 | 1038 ms |
+
+**Partial re-run.** After the minimum-SIP fix only the factual set could be
+re-run live: the provider's free tier caps usage at 200,000 tokens per day, and
+the cap was reached at the start of `table_facts`. The table-facts and how-to
+rows are from the first run. The fix only added lines to `overview` chunks;
+both sets target `fees` chunks, but they should be re-run once the quota resets.
 
 The output-contract columns are calculated over answered items only; a refusal
 is not an answer and is not scored against the answer contract. Latency is timed
@@ -55,8 +62,8 @@ the pipeline.
 
 | Set | n | hit@1 | hit@2 | hit@5 |
 |---|---:|---:|---:|---:|
-| factual | 50 | 50% | 90% | 100% |
-| table_facts | 20 | 0% | 85% | 100% |
+| factual | 55 | 61.8% | 90.9% | 100% |
+| table_facts | 20 | 20% | 85% | 100% |
 | howto | 21 | 4.8% | 57.1% | 100% |
 
 ### 2.3 Safety sets (through the real pipeline)
@@ -83,14 +90,14 @@ the pipeline.
 
 ### 3.1 Factual grounded accuracy is 80%, below the 90% target
 
-All 10 misses are one question shape: *category* and *sub-category* × 5
+All 10 misses (both runs) are one question shape: *category* and *sub-category* × 5
 schemes. Each is refused by the grounding check (`route=refusal`), not answered
 wrongly. The chunk says `Equity` / `Large cap` but never uses the words
 *category* or *sub-category*, and the grounding check is lexical, so it finds no
 anchor for the question. This is the failure direction the design prefers,
 refusing rather than answering from memory, and it was already recorded in
-`docs/p4_answer_eval.md` §5.1. It is still a recall gap. Of the 40 factual items
-the pipeline answered, **40/40 are correct**.
+`docs/p4_answer_eval.md` §5.1. It is still a recall gap. Of the 45 factual items
+the pipeline answered, **45/45 are correct**.
 
 Two ways to close it, neither applied here, because both change the system
 under test after the eval ran:
@@ -99,20 +106,19 @@ under test after the eval ran:
 - Or let a doc_class-hint match stand in for the lexical anchor on overview
   labels.
 
-### 3.2 Minimum SIP is not in the corpus
+### 3.2 Minimum SIP was missing from the corpus (fixed)
 
-The scheme pages publish it ("Minimum investments · Min. for SIP ₹100"). The
-`overview` locator in `config/sources.yaml` keeps only `header` plus the labels
-`Fund benchmark | Fund size (AUM) | NAV:`, so it never reaches a chunk. The
-factual eval set was authored from the built corpus, which is why it has no
-minimum-SIP items and why hit@5 never exposed the gap. `docs/corpus_gaps.md`
-listed minimum SIP as answerable; that was wrong and is corrected there.
+The scheme pages publish it ("Minimum investments · Min. for SIP ₹100"), but the
+`overview` locator kept only `header` plus `Fund benchmark | Fund size (AUM) |
+NAV:`, so it never reached a chunk. The factual set was authored from the built
+corpus, so it had no minimum-SIP items and hit@5 could not expose the gap.
 
-Consequence: `What is the minimum SIP amount for HDFC Balanced Advantage Fund?`
-is refused as `grounding_fail` (see `artifacts/sample_qa.md` #3). The refusal is
-correct, but it fails the PRD §13 criterion that all 6 canonical fact categories
-are retrievable for each scheme. The fix is a locator change plus a rebuild and
-re-run of this report; no code change is needed.
+Fixed in the registry only (GR12): the overview locator now also takes
+`Min. for SIP | Min. for 1st investment | Min. for 2nd investment` (Rs 100 for
+four schemes, Rs 500 for ELSS). Five `min_sip` items were added to
+`eval/factual.jsonl`, written from the rebuilt chunks before they were scored;
+this closes a coverage gap in a PRD-canonical category rather than tuning
+toward a result. Live: 5/5 answered correctly.
 
 ### 3.3 hit@5 is a weak gate at this corpus size
 

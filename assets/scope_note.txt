@@ -8,7 +8,8 @@ option only:
   5. HDFC Balanced Advantage Fund - Direct Growth
 
 For these five schemes it can answer documented facts: expense ratio, exit load,
-ELSS lock-in, riskometer level, benchmark, and fund size.
+minimum SIP and lump sum, ELSS lock-in, riskometer level, benchmark, and fund
+size.
 
 It does not give investment advice, does not compare or quote returns, and does
 not discuss your personal finances or asset allocation.

@@ -25,13 +25,13 @@ Of the six canonical categories in `PRD.md` §5.2:
 
 - **Expense ratio** — yes, per scheme, from the fee slab.
 - **Exit load** — yes, per scheme (ELSS: Nil).
-- **Minimum SIP** — **no, corrected in P6.** The pages publish it ("Minimum
-  investments · Min. for SIP ₹100"), but the `overview` locator keeps only
-  `header` and the labels `Fund benchmark | Fund size (AUM) | NAV:`, so it never
-  reaches a chunk. An earlier reading of this file listed it as answerable; the
-  factual eval set, authored from the corpus, has no minimum-SIP items, so no
-  gate caught it. See `artifacts/eval_report.md` §3.2. The fix is a locator
-  edit in `config/sources.yaml` plus a rebuild.
+- **Minimum SIP** — **yes, fixed in P6.** The `overview` locator originally
+  kept only `Fund benchmark | Fund size (AUM) | NAV:`, so minimum SIP and lump
+  sum never reached a chunk, and the factual eval set (authored from the corpus)
+  had no items to expose it. The locator now also takes `Min. for SIP`,
+  `Min. for 1st investment` and `Min. for 2nd investment`: Rs 100 for four
+  schemes, Rs 500 for ELSS. Five `min_sip` items were added to
+  `eval/factual.jsonl`.
 - **Riskometer** — yes, per scheme.
 - **Benchmark** — yes, per scheme.
 - **ELSS lock-in** — **yes, corrected.** The ELSS header renders the string
