@@ -1,0 +1,128 @@
+# Alias map for the query rewriter (architecture.md section 5.14, PRD section 5.1).
+#
+# Pure surface-form mapping. The rewriter never introduces facts; it only turns
+# what a user typed into canonical scheme_key values and soft doc-class hints.
+# Because the keys here must stay in lockstep with config/sources.yaml, the
+# contract test asserts that this file's canonical keys are exactly the registry's
+# scheme keys - a silent drift here would route queries to a scheme that does not
+# exist in the corpus.
+#
+# Keys are matched as substrings of a lowercased, whitespace-collapsed query, in
+# the order listed. Longer aliases are listed before shorter ones that contain
+# them ("balanced advantage" before "balanced") so the more specific match wins.
+# A resolved alias never blocks a second, different scheme from also resolving:
+# "compare large cap and small cap expense ratios" is a legitimate two-scheme
+# question and must keep both keys.
+
+schemes:
+  hdfc_large_cap_direct_growth:
+    names:
+      - "hdfc large cap fund direct growth"
+      - "hdfc large cap"
+      - "large cap fund"
+      - "largecap"
+      - "large cap"
+  hdfc_equity_flexi_cap_direct_growth:
+    names:
+      - "hdfc equity flexi cap fund direct growth"
+      - "hdfc equity flexi cap"
+      - "flexi cap fund"
+      - "hdfc flexi cap"
+      - "flexicap"
+      - "flexi cap"
+      - "hdfc equity"
+      - "equity fund"
+  hdfc_elss_tax_saver_direct_growth:
+    names:
+      - "hdfc elss tax saver fund direct plan growth"
+      - "hdfc elss tax saver"
+      - "elss tax saver"
+      - "tax saver fund"
+      - "tax saver"
+      - "80c fund"
+      - "80c"
+      - "elss"
+  hdfc_small_cap_direct_growth:
+    names:
+      - "hdfc small cap fund direct growth"
+      - "hdfc small cap"
+      - "small cap fund"
+      - "smallcap"
+      - "small cap"
+  hdfc_balanced_advantage_direct_growth:
+    names:
+      - "hdfc balanced advantage fund direct growth"
+      - "hdfc balanced advantage"
+      - "balanced advantage"
+      - "balanced advantage fund"
+      - "baf"
+
+# Unqualified references. Resolving one of these to all five keys is what keeps
+# "what is the expense ratio of these funds" in scope instead of out of scope.
+# Architecture 5.14 lists "hdfc alone / these funds / it" as multi-scheme.
+# Deliberately NOT listed: bare "balanced", bare "equity" and bare "cap", which
+# are far too generic to resolve to a scheme.
+multi_scheme:
+  - "hdfc"
+  - "hdfc funds"
+  - "these funds"
+  - "these schemes"
+  - "all five"
+  - "all 5"
+  - "all the funds"
+  - "your funds"
+
+# Soft doc-class boosts (architecture section 5.14). Ordered most specific first;
+# every matching cue contributes, so a question about exit load inside a lock-in
+# question gets both fees and faq/sid hints. A hint is a ranking boost only - a
+# hard filter would silently drop the answer whenever the hint is wrong.
+doc_class_cues:
+  - doc_classes: [fees, factsheet]
+    cues:
+      - "expense ratio"
+      - "ter"
+      - "charges"
+      - "fee"
+      - "fees"
+      - "expense"
+  - doc_classes: [fees, faq]
+    cues:
+      - "exit load"
+      - "redemption charge"
+      - "exit charges"
+  - doc_classes: [overview, faq]
+    cues:
+      - "minimum sip"
+      - "min sip"
+      - "minimum investment"
+      - "minimum amount"
+      - "lump sum"
+      - "min. for sip"
+      - "first investment"
+  - doc_classes: [faq, sid]
+    cues:
+      - "lock in"
+      - "lock-in"
+      - "lockin"
+      - "3 years"
+      - "3 year"
+      - "80c"
+  - doc_classes: [riskometer]
+    cues:
+      - "riskometer"
+      - "risk level"
+      - "risk category"
+      - "how risky"
+      - "risk"
+  - doc_classes: [overview, kim]
+    cues:
+      - "benchmark"
+      - "index"
+  - doc_classes: [statement_guide]
+    cues:
+      - "download"
+      - "statement"
+      - "tax statement"
+      - "capital gains"
+      - "folio"
+      - "tax report"

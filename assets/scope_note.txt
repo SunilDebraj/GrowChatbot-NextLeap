@@ -1,0 +1,16 @@
+This assistant covers exactly five HDFC mutual fund schemes, direct plan, growth
+option only:
+
+  1. HDFC Large Cap Fund - Direct Growth
+  2. HDFC Equity (Flexi Cap) Fund - Direct Growth
+  3. HDFC ELSS Tax Saver Fund - Direct Plan Growth
+  4. HDFC Small Cap Fund - Direct Growth
+  5. HDFC Balanced Advantage Fund - Direct Growth
+
+For these five schemes it can answer documented facts: expense ratio, exit load,
+minimum investment and SIP amounts, riskometer level, benchmark, and fund size.
+
+It does not give investment advice, does not compare or quote returns, and does
+not discuss your personal finances or asset allocation.
+
+Facts-only. No investment advice.

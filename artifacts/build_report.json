@@ -1,0 +1,47 @@
+{
+  "build_duration_s": 39.11,
+  "chunks": 20,
+  "chunks_per_doc_class": {
+    "fees": 10,
+    "overview": 5,
+    "riskometer": 5
+  },
+  "chunks_per_scheme": {
+    "hdfc_balanced_advantage_direct_growth": 4,
+    "hdfc_elss_tax_saver_direct_growth": 4,
+    "hdfc_equity_flexi_cap_direct_growth": 4,
+    "hdfc_large_cap_direct_growth": 4,
+    "hdfc_small_cap_direct_growth": 4
+  },
+  "coverage": {
+    "doc_classes": {
+      "fees": 10,
+      "overview": 5,
+      "riskometer": 5
+    },
+    "schemes": {
+      "hdfc_balanced_advantage_direct_growth": 4,
+      "hdfc_elss_tax_saver_direct_growth": 4,
+      "hdfc_equity_flexi_cap_direct_growth": 4,
+      "hdfc_large_cap_direct_growth": 4,
+      "hdfc_small_cap_direct_growth": 4
+    },
+    "stored_chunks": 20
+  },
+  "docs_deduped": 0,
+  "docs_failed": 0,
+  "docs_fetched": 15,
+  "per_strategy_tokens": {},
+  "strategy": "heading_aware",
+  "strategy_params": {
+    "max_chunk_tokens": 220,
+    "overlap_ratio": 0.15,
+    "protect_tables": true,
+    "repeat_table_headers": true,
+    "target_tokens": 160
+  },
+  "tokens_max": 66,
+  "tokens_mean": 40.0,
+  "tokens_min": 8,
+  "tokens_total": 800
+}

@@ -1,0 +1,5 @@
+{"id": "oos_01", "query": "What is the weather in Mumbai?", "expected_class": "out_of_scope", "note": "no scheme token, no lexicon hit"}
+{"id": "oos_02", "query": "Explain the share market crash of 2008", "expected_class": "out_of_scope", "note": "market history, not one of the five schemes; '2008' is four bare digits and is not OTP because no OTP keyword is present"}
+{"id": "oos_03", "query": "Tell me about the Bitcoin price today", "expected_class": "out_of_scope", "note": ""}
+{"id": "oos_04", "query": "What is India's GDP?", "expected_class": "out_of_scope", "note": ""}
+{"id": "oos_05", "query": "How do I bake sourdough bread?", "expected_class": "out_of_scope", "note": "'how do i' alone is not a how_to signal; how_to is only reachable for a resolvable scheme reference, so an unresolved how-to falls out of scope"}

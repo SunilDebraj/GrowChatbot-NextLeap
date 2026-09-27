@@ -1,0 +1,451 @@
+==============================================================================
+CHUNK DUMP - the text the retriever will search
+==============================================================================
+generated_at     : 2026-09-27T09:24:36+00:00
+source           : chroma/ collection 'mf_facts_v1'
+chunks           : 20
+embedding_model  : sentence-transformers/all-MiniLM-L6-v2
+embedding_dim    : 384
+corpus_version   : 2026-09-27T08:58:12+00:00
+corpus_hash      : a691326307511b8ed878c378219d43a0132e236fbe057deff087627c855ffd87
+built_at         : 2026-09-27T08:58:12+00:00
+chunking_strategy: heading_aware
+
+Each block below is one Chroma document. The TEXT section is verbatim.
+
+==============================================================================
+CHUNK 1 of 20
+==============================================================================
+id               : hdfc_balanced_advantage_direct_growth:fees:c6082faa2aad:0
+scheme_key       : hdfc_balanced_advantage_direct_growth
+scheme_name      : HDFC Balanced Advantage Fund - Direct Growth
+doc_class        : fees
+section          : Expense ratio
+chunk_index      : 0
+token_count      : 66
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-balanced-advantage-fund-direct-growth
+content_hash     : c6082faa2aad89d3a61a01f7e0f7eebbd62b4a1f82b413b1e719edcf47cfc93c
+text_chars       : 243
+------------------------------------------------------------------------------
+Expense ratio: 0.78%
+
+H3: Exit load, stamp duty and tax
+Exit load
+Exit Load for units in excess of 15% of the investment,1% will be charged for redemption within 1 year.
+Stamp duty on investment:
+0.005% (from July 1st, 2020)
+from July 1st 2020
+
+==============================================================================
+CHUNK 2 of 20
+==============================================================================
+id               : hdfc_balanced_advantage_direct_growth:fees:c6082faa2aad:1
+scheme_key       : hdfc_balanced_advantage_direct_growth
+scheme_name      : HDFC Balanced Advantage Fund - Direct Growth
+doc_class        : fees
+section          : Tax
+chunk_index      : 1
+token_count      : 52
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-balanced-advantage-fund-direct-growth
+content_hash     : c6082faa2aad89d3a61a01f7e0f7eebbd62b4a1f82b413b1e719edcf47cfc93c
+text_chars       : 189
+------------------------------------------------------------------------------
+Tax implication
+If you redeem within one year, returns are taxed at 20%. If you redeem after one year, returns exceeding Rs 1.25 lakh in a financial year are taxed at 12.5%.
+Check past data
+
+==============================================================================
+CHUNK 3 of 20
+==============================================================================
+id               : hdfc_balanced_advantage_direct_growth:overview:a16ed7d6001a:0
+scheme_key       : hdfc_balanced_advantage_direct_growth
+scheme_name      : HDFC Balanced Advantage Fund - Direct Growth
+doc_class        : overview
+section          : HDFC Balanced Advantage Fund Direct Growth
+chunk_index      : 0
+token_count      : 47
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-balanced-advantage-fund-direct-growth
+content_hash     : a16ed7d6001aa41e65d9c68b0c535382184e9e4e005bc1c55b50d03a7b218a3c
+text_chars       : 184
+------------------------------------------------------------------------------
+HDFC Balanced Advantage Fund Direct Growth
+Hybrid
+Dynamic Asset Allocation
+Very High Risk
+
+Fund benchmark: NIFTY 50 Hybrid Composite Debt 50:50 Index
+Fund size (AUM): Rs 1,07,295.79 Cr
+
+==============================================================================
+CHUNK 4 of 20
+==============================================================================
+id               : hdfc_balanced_advantage_direct_growth:riskometer:d8d5d76c880f:0
+scheme_key       : hdfc_balanced_advantage_direct_growth
+scheme_name      : HDFC Balanced Advantage Fund - Direct Growth
+doc_class        : riskometer
+section          : HDFC Balanced Advantage Fund - Direct Growth
+chunk_index      : 0
+token_count      : 8
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-balanced-advantage-fund-direct-growth
+content_hash     : d8d5d76c880f4bbed888cff6fcc8c42b1be5f58242e81f0bc4cddffdb345709c
+text_chars       : 26
+------------------------------------------------------------------------------
+Riskometer: Very High Risk
+
+==============================================================================
+CHUNK 5 of 20
+==============================================================================
+id               : hdfc_elss_tax_saver_direct_growth:fees:e7b64b5ba893:0
+scheme_key       : hdfc_elss_tax_saver_direct_growth
+scheme_name      : HDFC ELSS Tax Saver Fund - Direct Plan Growth
+doc_class        : fees
+section          : Expense ratio
+chunk_index      : 0
+token_count      : 44
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth
+content_hash     : e7b64b5ba893a7e856ce0310de0d78cb97a94f3445a73d94075eaac1dbfbd92b
+text_chars       : 143
+------------------------------------------------------------------------------
+Expense ratio: 1.21%
+
+H3: Exit load, stamp duty and tax
+Exit load
+Nil
+Stamp duty on investment:
+0.005% (from July 1st, 2020)
+from July 1st 2020
+
+==============================================================================
+CHUNK 6 of 20
+==============================================================================
+id               : hdfc_elss_tax_saver_direct_growth:fees:e7b64b5ba893:1
+scheme_key       : hdfc_elss_tax_saver_direct_growth
+scheme_name      : HDFC ELSS Tax Saver Fund - Direct Plan Growth
+doc_class        : fees
+section          : Tax
+chunk_index      : 1
+token_count      : 52
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth
+content_hash     : e7b64b5ba893a7e856ce0310de0d78cb97a94f3445a73d94075eaac1dbfbd92b
+text_chars       : 189
+------------------------------------------------------------------------------
+Tax implication
+If you redeem within one year, returns are taxed at 20%. If you redeem after one year, returns exceeding Rs 1.25 lakh in a financial year are taxed at 12.5%.
+Check past data
+
+==============================================================================
+CHUNK 7 of 20
+==============================================================================
+id               : hdfc_elss_tax_saver_direct_growth:overview:2a87cf609de0:0
+scheme_key       : hdfc_elss_tax_saver_direct_growth
+scheme_name      : HDFC ELSS Tax Saver Fund - Direct Plan Growth
+doc_class        : overview
+section          : HDFC ELSS Tax Saver Fund Direct Plan Growth
+chunk_index      : 0
+token_count      : 53
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth
+content_hash     : 2a87cf609de0a06af69b04ef7df9bb68d4ae0b4baea7711a43365b8b84c1e1e1
+text_chars       : 167
+------------------------------------------------------------------------------
+HDFC ELSS Tax Saver Fund Direct Plan Growth
+ELSS - 3Y Lock-in
+Equity
+ELSS
+Very High Risk
+
+Fund benchmark: NIFTY 500 Total Return Index
+Fund size (AUM): Rs 15,991.78 Cr
+
+==============================================================================
+CHUNK 8 of 20
+==============================================================================
+id               : hdfc_elss_tax_saver_direct_growth:riskometer:d8d5d76c880f:0
+scheme_key       : hdfc_elss_tax_saver_direct_growth
+scheme_name      : HDFC ELSS Tax Saver Fund - Direct Plan Growth
+doc_class        : riskometer
+section          : HDFC ELSS Tax Saver Fund - Direct Plan Growth
+chunk_index      : 0
+token_count      : 8
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth
+content_hash     : d8d5d76c880f4bbed888cff6fcc8c42b1be5f58242e81f0bc4cddffdb345709c
+text_chars       : 26
+------------------------------------------------------------------------------
+Riskometer: Very High Risk
+
+==============================================================================
+CHUNK 9 of 20
+==============================================================================
+id               : hdfc_equity_flexi_cap_direct_growth:fees:0299598cd397:0
+scheme_key       : hdfc_equity_flexi_cap_direct_growth
+scheme_name      : HDFC Equity (Flexi Cap) Fund - Direct Growth
+doc_class        : fees
+section          : Expense ratio
+chunk_index      : 0
+token_count      : 54
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth
+content_hash     : 0299598cd3970ecceeb4900eb8554a8c729cfc2b99f108d5a9aea6905dbd12ef
+text_chars       : 181
+------------------------------------------------------------------------------
+Expense ratio: 0.77%
+
+H3: Exit load, stamp duty and tax
+Exit load
+Exit load of 1% if redeemed within 1 year
+Stamp duty on investment:
+0.005% (from July 1st, 2020)
+from July 1st 2020
+
+==============================================================================
+CHUNK 10 of 20
+==============================================================================
+id               : hdfc_equity_flexi_cap_direct_growth:fees:0299598cd397:1
+scheme_key       : hdfc_equity_flexi_cap_direct_growth
+scheme_name      : HDFC Equity (Flexi Cap) Fund - Direct Growth
+doc_class        : fees
+section          : Tax
+chunk_index      : 1
+token_count      : 52
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth
+content_hash     : 0299598cd3970ecceeb4900eb8554a8c729cfc2b99f108d5a9aea6905dbd12ef
+text_chars       : 189
+------------------------------------------------------------------------------
+Tax implication
+If you redeem within one year, returns are taxed at 20%. If you redeem after one year, returns exceeding Rs 1.25 lakh in a financial year are taxed at 12.5%.
+Check past data
+
+==============================================================================
+CHUNK 11 of 20
+==============================================================================
+id               : hdfc_equity_flexi_cap_direct_growth:overview:5e82f902325f:0
+scheme_key       : hdfc_equity_flexi_cap_direct_growth
+scheme_name      : HDFC Equity (Flexi Cap) Fund - Direct Growth
+doc_class        : overview
+section          : HDFC Flexi Cap Direct Plan Growth
+chunk_index      : 0
+token_count      : 45
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth
+content_hash     : 5e82f902325f5a143cb37f54ae5ac6a69ea3ffa23062c532f120d8c4221e3d60
+text_chars       : 146
+------------------------------------------------------------------------------
+HDFC Flexi Cap Direct Plan Growth
+Equity
+Flexi Cap
+Very High Risk
+
+Fund benchmark: NIFTY 500 Total Return Index
+Fund size (AUM): Rs 1,13,606.47 Cr
+
+==============================================================================
+CHUNK 12 of 20
+==============================================================================
+id               : hdfc_equity_flexi_cap_direct_growth:riskometer:d8d5d76c880f:0
+scheme_key       : hdfc_equity_flexi_cap_direct_growth
+scheme_name      : HDFC Equity (Flexi Cap) Fund - Direct Growth
+doc_class        : riskometer
+section          : HDFC Equity (Flexi Cap) Fund - Direct Growth
+chunk_index      : 0
+token_count      : 8
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth
+content_hash     : d8d5d76c880f4bbed888cff6fcc8c42b1be5f58242e81f0bc4cddffdb345709c
+text_chars       : 26
+------------------------------------------------------------------------------
+Riskometer: Very High Risk
+
+==============================================================================
+CHUNK 13 of 20
+==============================================================================
+id               : hdfc_large_cap_direct_growth:fees:47611f3f98b8:0
+scheme_key       : hdfc_large_cap_direct_growth
+scheme_name      : HDFC Large Cap Fund - Direct Growth
+doc_class        : fees
+section          : Expense ratio
+chunk_index      : 0
+token_count      : 54
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth
+content_hash     : 47611f3f98b89155e354ba920ef47216f90e77f2b6db757d5b72ceae572c984d
+text_chars       : 181
+------------------------------------------------------------------------------
+Expense ratio: 1.03%
+
+H3: Exit load, stamp duty and tax
+Exit load
+Exit load of 1% if redeemed within 1 year
+Stamp duty on investment:
+0.005% (from July 1st, 2020)
+from July 1st 2020
+
+==============================================================================
+CHUNK 14 of 20
+==============================================================================
+id               : hdfc_large_cap_direct_growth:fees:47611f3f98b8:1
+scheme_key       : hdfc_large_cap_direct_growth
+scheme_name      : HDFC Large Cap Fund - Direct Growth
+doc_class        : fees
+section          : Tax
+chunk_index      : 1
+token_count      : 52
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth
+content_hash     : 47611f3f98b89155e354ba920ef47216f90e77f2b6db757d5b72ceae572c984d
+text_chars       : 189
+------------------------------------------------------------------------------
+Tax implication
+If you redeem within one year, returns are taxed at 20%. If you redeem after one year, returns exceeding Rs 1.25 lakh in a financial year are taxed at 12.5%.
+Check past data
+
+==============================================================================
+CHUNK 15 of 20
+==============================================================================
+id               : hdfc_large_cap_direct_growth:overview:a73b98967ae4:0
+scheme_key       : hdfc_large_cap_direct_growth
+scheme_name      : HDFC Large Cap Fund - Direct Growth
+doc_class        : overview
+section          : HDFC Large Cap Fund Direct Growth
+chunk_index      : 0
+token_count      : 41
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth
+content_hash     : a73b98967ae461c3ba76a6a764e83f0e283daced487f9ecdb096cfd61e6c32f4
+text_chars       : 144
+------------------------------------------------------------------------------
+HDFC Large Cap Fund Direct Growth
+Equity
+Large Cap
+Very High Risk
+
+Fund benchmark: NIFTY 100 Total Return Index
+Fund size (AUM): Rs 39,933.37 Cr
+
+==============================================================================
+CHUNK 16 of 20
+==============================================================================
+id               : hdfc_large_cap_direct_growth:riskometer:d8d5d76c880f:0
+scheme_key       : hdfc_large_cap_direct_growth
+scheme_name      : HDFC Large Cap Fund - Direct Growth
+doc_class        : riskometer
+section          : HDFC Large Cap Fund - Direct Growth
+chunk_index      : 0
+token_count      : 8
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth
+content_hash     : d8d5d76c880f4bbed888cff6fcc8c42b1be5f58242e81f0bc4cddffdb345709c
+text_chars       : 26
+------------------------------------------------------------------------------
+Riskometer: Very High Risk
+
+==============================================================================
+CHUNK 17 of 20
+==============================================================================
+id               : hdfc_small_cap_direct_growth:fees:024624aed9db:0
+scheme_key       : hdfc_small_cap_direct_growth
+scheme_name      : HDFC Small Cap Fund - Direct Growth
+doc_class        : fees
+section          : Expense ratio
+chunk_index      : 0
+token_count      : 54
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth
+content_hash     : 024624aed9dbb628d8b07ea76f5f91fed62a11a9c74a34a2a52738de53ab16d3
+text_chars       : 181
+------------------------------------------------------------------------------
+Expense ratio: 0.78%
+
+H3: Exit load, stamp duty and tax
+Exit load
+Exit load of 1% if redeemed within 1 year
+Stamp duty on investment:
+0.005% (from July 1st, 2020)
+from July 1st 2020
+
+==============================================================================
+CHUNK 18 of 20
+==============================================================================
+id               : hdfc_small_cap_direct_growth:fees:024624aed9db:1
+scheme_key       : hdfc_small_cap_direct_growth
+scheme_name      : HDFC Small Cap Fund - Direct Growth
+doc_class        : fees
+section          : Tax
+chunk_index      : 1
+token_count      : 52
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth
+content_hash     : 024624aed9dbb628d8b07ea76f5f91fed62a11a9c74a34a2a52738de53ab16d3
+text_chars       : 189
+------------------------------------------------------------------------------
+Tax implication
+If you redeem within one year, returns are taxed at 20%. If you redeem after one year, returns exceeding Rs 1.25 lakh in a financial year are taxed at 12.5%.
+Check past data
+
+==============================================================================
+CHUNK 19 of 20
+==============================================================================
+id               : hdfc_small_cap_direct_growth:overview:6ec4e757294d:0
+scheme_key       : hdfc_small_cap_direct_growth
+scheme_name      : HDFC Small Cap Fund - Direct Growth
+doc_class        : overview
+section          : HDFC Small Cap Fund Direct Growth
+chunk_index      : 0
+token_count      : 42
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth
+content_hash     : 6ec4e757294db99c97e02d02e3bcd690844a0b63d05117c78e1f908ad0d53081
+text_chars       : 151
+------------------------------------------------------------------------------
+HDFC Small Cap Fund Direct Growth
+Equity
+Small Cap
+Very High Risk
+
+Fund benchmark: BSE 250 SmallCap Total Return Index
+Fund size (AUM): Rs 41,890.86 Cr
+
+==============================================================================
+CHUNK 20 of 20
+==============================================================================
+id               : hdfc_small_cap_direct_growth:riskometer:d8d5d76c880f:0
+scheme_key       : hdfc_small_cap_direct_growth
+scheme_name      : HDFC Small Cap Fund - Direct Growth
+doc_class        : riskometer
+section          : HDFC Small Cap Fund - Direct Growth
+chunk_index      : 0
+token_count      : 8
+publisher        : aggregator
+last_updated     : 2026-09-27
+source_url       : https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth
+content_hash     : d8d5d76c880f4bbed888cff6fcc8c42b1be5f58242e81f0bc4cddffdb345709c
+text_chars       : 26
+------------------------------------------------------------------------------
+Riskometer: Very High Risk
+

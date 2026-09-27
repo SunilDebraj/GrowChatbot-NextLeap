@@ -1,0 +1,32 @@
+[
+  {
+    "build_time_s": 9.35,
+    "chunk_count": 15,
+    "eval_set": "factual",
+    "grounded_accuracy": 0.5,
+    "hit@1": 0.4,
+    "hit@2": 0.5,
+    "hit@5": 0.5,
+    "max_chunk_tokens": 55,
+    "mean_chunk_tokens": 41.6,
+    "n_items": 50,
+    "query_time_s": 0.077,
+    "strategy": "atomic_fact",
+    "table_fact_accuracy": null
+  },
+  {
+    "build_time_s": 9.35,
+    "chunk_count": 15,
+    "eval_set": "table_facts",
+    "grounded_accuracy": 0.45,
+    "hit@1": 0.25,
+    "hit@2": 0.45,
+    "hit@5": 0.45,
+    "max_chunk_tokens": 55,
+    "mean_chunk_tokens": 41.6,
+    "n_items": 20,
+    "query_time_s": 0.032,
+    "strategy": "atomic_fact",
+    "table_fact_accuracy": 0.45
+  }
+]

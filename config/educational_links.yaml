@@ -1,0 +1,126 @@
+# Educational link registry for refusal copy (architecture.md section 5.13, PRD OQ6).
+#
+# OQ6 is a *content* open question: "Which specific educational links to use for
+# each refusal class". It is resolved here, and the resolution is recorded rather
+# than assumed, because a refusal that cites a dead or wrong link is a defect in
+# its own right: the user is sent away with nowhere to go.
+#
+# RESOLUTION RECORD
+# -----------------
+# Every `url` below was fetched over the network on the date in `verified_on` and
+# returned the recorded status with a real, non-empty HTML body. Verification method
+# is the same one the P1 fetcher uses: httpx GET, follow_redirects=True, a browser
+# User-Agent. Scheme URLs additionally returned HTTP 200 during the P1 build.
+#
+# The link *intent* per class is the one fixed by architecture section 5.13. Where
+# the ideal target was unreachable from the build environment, the substitution and
+# its reason are recorded under that class rather than quietly swapped. Substituting
+# a link the spec did not ask for would be a silent scope change; the spec's intent
+# is preserved in `intent` so a reviewer can re-decide it.
+
+version: 1
+verified_on: "2026-09-27"
+verification_method: "httpx GET follow_redirects browser UA; status + non-empty body"
+
+# Targets named by architecture section 5.13 that could NOT be verified from the
+# build environment. Recorded so a reviewer knows these were tried, not overlooked.
+# sebi.gov.in and investor.sebi.gov.in time out at the TLS handshake; this is a
+# network-egress restriction of the build host, not a 404. They are the preferred
+# targets for `opinionated` and `portfolio_personal`; swap them in once reachable.
+unverified_candidates:
+  - url: "https://investor.sebi.gov.in/understanding_mf.html"
+    intended_class: opinionated
+    status: unreachable
+    reason: "ConnectTimeout at TLS handshake from the build host"
+  - url: "https://www.sebi.gov.in/sebi_data/commondocs/siep_h.html"
+    intended_class: portfolio_personal
+    status: unreachable
+    reason: "ConnectTimeout at TLS handshake from the build host"
+  - url: "https://investor.sebi.gov.in/pdf/reference-material/MFunds.pdf"
+    intended_class: opinionated
+    status: unreachable
+    reason: "ConnectTimeout at TLS handshake from the build host"
+  - url: "https://www.hdfcmutualfund.com/"
+    intended_class: opinionated
+    status: unreachable
+    reason: "DNS resolution fails from the build host; the AMC site also returned 403 during P1"
+
+# Classes that resolve their link from the source registry at runtime rather than
+# from a static URL here, because the target is scheme-specific.
+registry_linked_classes:
+  - performance
+  - grounding_fail
+
+classes:
+  # PRD FR5 / architecture 5.11: a static notice, no external link required. Sending
+  # a PII-bearing user to an external site would also be a needless third-party hop.
+  pii:
+    intent: "Static no-PII notice, no external link required"
+    link: null
+
+  opinionated:
+    intent: "SEBI / AMC investor-education page on how to evaluate a mutual fund"
+    link:
+      label: "AMFI - official scheme documents and investor information"
+      url: "https://www.amfiindia.com/"
+      http_status: 200
+    substitution_note: >-
+      The SEBI and AMC pages named by the intent are unreachable from this build
+      host (see unverified_candidates). AMFI is the industry association that
+      publishes NAV, KIM and SID for every registered scheme, so it is the
+      closest verified host to the stated intent: it is where a user can go read
+      the primary documents for a scheme themselves, which is the action this
+      refusal is redirecting to.
+
+  portfolio_personal:
+    intent: "SEBI investor-education page on asset allocation basics"
+    link:
+      label: "RBI Financial Education - investor money and financial literacy"
+      url: "https://www.rbi.org.in/financialeducation/"
+      http_status: 200
+    substitution_note: >-
+      The SEBI asset-allocation page named by the intent is unreachable from this
+      build host. The RBI Financial Education page is a regulator-published
+      investor-education resource and is verified reachable, but it is general
+      financial literacy rather than mutual-fund-specific asset allocation. This
+      is the weakest link in the registry and is flagged in docs/corpus_gaps.md.
+
+  performance:
+    intent: "The scheme's official factsheet (from the registry)"
+    link_from_registry: true
+    registry_field: url
+    gap_note: >-
+      architecture section 5.13 requires the official factsheet specifically, and
+      the factsheet doc class is an unsourced corpus gap (hdfcfund.com 403, AMFI
+      document endpoints 404 - see docs/corpus_gaps.md). This class therefore
+      resolves to the scheme page URL held in the registry, which is where the
+      public return figures actually are, and the refusal copy says "scheme page"
+      rather than claiming to link a factsheet that does not exist here.
+    preferred_when_available: "the factsheet source_url once the factsheet doc class is sourced"
+    fallback_link:
+      label: "All mutual funds on Groww"
+      url: "https://groww.in/mutual-funds"
+      http_status: 200
+    fallback_reason: >-
+      Used when the performance question names no scheme ("what are the returns
+      since inception?"), so there is no factsheet or scheme page to point at.
+      The refusal then asks the user to name the scheme. Linking the full fund
+      list keeps the "every refusal carries a link" rule true without inventing a
+      scheme-specific target.
+
+  out_of_scope:
+    intent: "Product scope note listing the 5 covered schemes"
+    link:
+      label: "All mutual funds on Groww"
+      url: "https://groww.in/mutual-funds"
+      http_status: 200
+    local_note: "assets/scope_note.txt"
+
+  grounding_fail:
+    intent: "The scheme's scheme page / factsheet, phrased as 'check the official document'"
+    link_from_registry: true
+    registry_field: url
+    fallback_link:
+      label: "All mutual funds on Groww"
+      url: "https://groww.in/mutual-funds"
+      http_status: 200

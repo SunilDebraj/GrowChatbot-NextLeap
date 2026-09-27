@@ -1,0 +1,159 @@
+# Source registry (architecture.md section 5.1, PRD.md section 5.1/5.2).
+#
+# ONE SPEC PER (scheme_key, doc_class). Multiple specs MAY share one url with a
+# different locator: the page is fetched once through the content-addressed cache
+# and then parsed once per spec, so a single scheme page yields several document
+# classes. This is the structural rule called out in implementation.md section 5.0.
+#
+# All page-structure assumptions live in this file. No selector or label is
+# hardcoded in parser code (rule GR12).
+#
+# LOCATOR GRAMMAR (parts joined by ";"), evaluated in order and concatenated:
+#   full                      the whole cleaned document
+#   css:<selector>            first matching element
+#   heading:<exact text>      the section from that heading to the next heading
+#                             of the same or a higher level
+#   labels:<L1>|<L2>          "L: value" for each label, taking the element's
+#                             next sibling as the value
+#   pill:<exact text>         "Riskometer: <text>" for a label-less header chip
+#
+# WHY: hdfcmutualfund.com returns HTTP 403 and sebi.gov.in times out, so no
+# AMC-hosted copy is reachable. Groww republishes AMC-published scheme data, which
+# PRD.md section 5.3 permits for this milestone, but it means these are
+# aggregator-hosted republishing rather than primary AMC documents. Recorded in
+# sources.csv so the provenance is visible in the artifact.
+
+defaults:
+  publisher: aggregator
+  effective_date: null
+  last_updated: null
+
+schemes:
+  - scheme_key: hdfc_large_cap_direct_growth
+    scheme_name: HDFC Large Cap Fund - Direct Growth
+    url: https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth
+    specs:
+      - {source_id: lc_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: lc_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
+      - source_id: lc_faq
+        doc_class: faq
+        enabled: false
+        reason: >-
+          Groww renders the FAQ accordion client-side. The static HTML
+          contains no question/answer pairs, so any locator would return
+          navigation chrome rather than FAQ content. See
+          docs/corpus_gaps.md.
+      - {source_id: lc_riskometer,   doc_class: riskometer,   locator: "pill:Very High Risk;pill:High Risk;pill:Moderate Risk;pill:Low Risk;pill:Very Low Risk"}
+
+  - scheme_key: hdfc_equity_flexi_cap_direct_growth
+    scheme_name: HDFC Equity (Flexi Cap) Fund - Direct Growth
+    url: https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth
+    specs:
+      - {source_id: fx_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: fx_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
+      - source_id: fx_faq
+        doc_class: faq
+        enabled: false
+        reason: >-
+          Groww renders the FAQ accordion client-side. The static HTML
+          contains no question/answer pairs, so any locator would return
+          navigation chrome rather than FAQ content. See
+          docs/corpus_gaps.md.
+      - {source_id: fx_riskometer,   doc_class: riskometer,   locator: "pill:Very High Risk;pill:High Risk;pill:Moderate Risk;pill:Low Risk;pill:Very Low Risk"}
+
+  - scheme_key: hdfc_elss_tax_saver_direct_growth
+    scheme_name: HDFC ELSS Tax Saver Fund - Direct Plan Growth
+    # NOTE: the URL in PRD.md section 5.1 returns HTTP 404. The working path is
+    # hdfc-elss-tax-saver-fund-direct-plan-growth. Corrected here; the 404 is
+    # recorded in sources.csv from the pre-correction probe.
+    url: https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth
+    specs:
+      - {source_id: el_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: el_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
+      - source_id: el_faq
+        doc_class: faq
+        enabled: false
+        reason: >-
+          Groww renders the FAQ accordion client-side. The static HTML
+          contains no question/answer pairs, so any locator would return
+          navigation chrome rather than FAQ content. See
+          docs/corpus_gaps.md.
+      - {source_id: el_riskometer,   doc_class: riskometer,   locator: "pill:Very High Risk;pill:High Risk;pill:Moderate Risk;pill:Low Risk;pill:Very Low Risk"}
+
+  - scheme_key: hdfc_small_cap_direct_growth
+    scheme_name: HDFC Small Cap Fund - Direct Growth
+    url: https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth
+    specs:
+      - {source_id: sc_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: sc_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
+      - source_id: sc_faq
+        doc_class: faq
+        enabled: false
+        reason: >-
+          Groww renders the FAQ accordion client-side. The static HTML
+          contains no question/answer pairs, so any locator would return
+          navigation chrome rather than FAQ content. See
+          docs/corpus_gaps.md.
+      - {source_id: sc_riskometer,   doc_class: riskometer,   locator: "pill:Very High Risk;pill:High Risk;pill:Moderate Risk;pill:Low Risk;pill:Very Low Risk"}
+
+  - scheme_key: hdfc_balanced_advantage_direct_growth
+    scheme_name: HDFC Balanced Advantage Fund - Direct Growth
+    url: https://groww.in/mutual-funds/hdfc-balanced-advantage-fund-direct-growth
+    specs:
+      - {source_id: ba_overview,     doc_class: overview,     locator: "css:header;labels:Fund benchmark|Fund size (AUM)|NAV:"}
+      - {source_id: ba_fees,         doc_class: fees,         locator: "labels:Expense ratio;heading:Exit load, stamp duty and tax"}
+      - source_id: ba_faq
+        doc_class: faq
+        enabled: false
+        reason: >-
+          Groww renders the FAQ accordion client-side. The static HTML
+          contains no question/answer pairs, so any locator would return
+          navigation chrome rather than FAQ content. See
+          docs/corpus_gaps.md.
+      - {source_id: ba_riskometer,   doc_class: riskometer,   locator: "pill:Very High Risk;pill:High Risk;pill:Moderate Risk;pill:Low Risk;pill:Very Low Risk"}
+
+# ---------------------------------------------------------------------------
+# DOCUMENT CLASSES THAT COULD NOT BE SOURCED.
+#
+# Recorded as disabled specs with the reason, so sources.csv and the manifest
+# state the corpus gap instead of silently omitting it. This is the
+# implementation.md section 2.1 STOP condition: "doc classes must be
+# renegotiated". Reachable coverage is 3 of 8 doc classes (overview, fees,
+# riskometer). faq is reachable by URL but its content is client-rendered, so
+# its five specs are disabled above rather than returning navigation chrome.
+#
+#   faq             NO CONTENT  groww.in scheme pages return 200 and the spec is
+#                              enabled in the registry, but the accordion is
+#                              rendered client-side. The static HTML holds no
+#                              question/answer pairs, only nav labels, so the
+#                              specs are disabled with a reason.
+#   factsheet       NOT FOUND  hdfcfund.com 403; amfiindia.com document
+#                              endpoints 404; factsheet links not present in
+#                              server-rendered HTML.
+#   kim             NOT FOUND  same as above (KIM is distributed as a PDF from
+#                              the AMC site).
+#   sid             NOT FOUND  same as above.
+#   statement_guide NOT FOUND  groww.in/help/* returns 200 but the article body
+#                              is client-side rendered; only "Customer Support"
+#                              is present in the HTML.
+#
+# CONSEQUENCE FOR PRD.md SECTION 5.2: expense ratio, exit load, minimum SIP,
+# riskometer and benchmark are answerable from the corpus, and so is the ELSS
+# lock-in period: the ELSS header renders the chip "ELSS - 3Y Lock-in", which the
+# css:header locator picks up. An earlier revision of this file claimed the
+# lock-in was missing; that search covered the body copy only, not the header.
+#
+# Capital-gains statement download is NOT present in any reachable page. The
+# grounding check refuses that question rather than answering from model memory,
+# which is the designed safe behaviour, but it cannot be demonstrated until a
+# source is added. See docs/corpus_gaps.md.
+# ---------------------------------------------------------------------------
+unavailable:
+  - doc_class: factsheet
+    reason: "hdfcfund.com 403; amfiindia.com document endpoints 404"
+  - doc_class: kim
+    reason: "KIM PDFs are only distributed from the AMC site, which returns 403"
+  - doc_class: sid
+    reason: "SID PDFs are only distributed from the AMC site, which returns 403"
+  - doc_class: statement_guide
+    reason: "groww.in/help/* article bodies are client-side rendered; no text in HTML"

@@ -1,0 +1,10 @@
+{"id": "perf_01", "query": "What are the returns of HDFC Large Cap Fund?", "expected_class": "performance", "lexicon_cue": "return", "expect_no_numbers": true}
+{"id": "perf_02", "query": "What is the 3 year CAGR of HDFC Small Cap Fund?", "expected_class": "performance", "lexicon_cue": "cagr", "expect_no_numbers": true, "note": "the year window is return-qualified here, so it does not need the bare-year exemption"}
+{"id": "perf_03", "query": "Give me the XIRR of HDFC Balanced Advantage Fund", "expected_class": "performance", "lexicon_cue": "xirr", "expect_no_numbers": true}
+{"id": "perf_04", "query": "What is the NAV history of HDFC Flexi Cap?", "expected_class": "performance", "lexicon_cue": "nav", "expect_no_numbers": true, "note": "'nav' is in the performance lexicon per architecture 5.12, so even a single-NAV question is refused; the corpus holds NAV only inside the header and refusing is the conservative reading of D5"}
+{"id": "perf_05", "query": "How has HDFC ELSS performed?", "expected_class": "performance", "lexicon_cue": "performance", "expect_no_numbers": true}
+{"id": "perf_06", "query": "Which of these five is the best performing?", "expected_class": "performance", "lexicon_cue": "best performing", "expect_no_numbers": true, "note": "checked before opinionated, so 'best performing' never becomes a best-fund recommendation"}
+{"id": "perf_07", "query": "Compare the returns of large cap and small cap", "expected_class": "performance", "lexicon_cue": "return", "expect_no_numbers": true}
+{"id": "perf_08", "query": "What is the 1 year return of HDFC Large Cap?", "expected_class": "performance", "lexicon_cue": "1 year", "expect_no_numbers": true}
+{"id": "perf_09", "query": "What are the returns since inception?", "expected_class": "performance", "lexicon_cue": "since inception", "expect_no_numbers": true}
+{"id": "perf_10", "query": "Show me the top performing fund's annualised returns", "expected_class": "performance", "lexicon_cue": "top performing", "expect_no_numbers": true}

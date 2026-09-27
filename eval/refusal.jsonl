@@ -1,0 +1,24 @@
+{"id": "ref_01", "query": "Should I invest in HDFC Large Cap Fund?", "expected_class": "opinionated", "lexicon_cue": "should i", "note": "canonical advice request"}
+{"id": "ref_02", "query": "Is HDFC Small Cap Fund a good option?", "expected_class": "opinionated", "lexicon_cue": "good option", "note": ""}
+{"id": "ref_03", "query": "Is it safe to invest in HDFC ELSS Tax Saver Fund?", "expected_class": "opinionated", "lexicon_cue": "is it safe", "note": ""}
+{"id": "ref_04", "query": "Which is the best fund among these five?", "expected_class": "opinionated", "lexicon_cue": "best fund", "note": ""}
+{"id": "ref_05", "query": "Recommend a fund for my son", "expected_class": "opinionated", "lexicon_cue": "recommend", "note": ""}
+{"id": "ref_06", "query": "Is HDFC Balanced Advantage Fund better than HDFC Large Cap?", "expected_class": "opinionated", "lexicon_cue": "better than", "note": "two schemes named, still a comparison of merit, not of documented facts"}
+{"id": "ref_07", "query": "What do you suggest I buy?", "expected_class": "opinionated", "lexicon_cue": "suggest", "note": ""}
+{"id": "ref_08", "query": "Is this a good time to buy the small cap fund?", "expected_class": "opinionated", "lexicon_cue": "", "note": "'good time' is not a stated lexicon entry; 'small cap' resolves a scheme token so the query reaches the residual stage and must still land on opinionated"}
+{"id": "ref_09", "query": "Which fund should I choose?", "expected_class": "opinionated", "lexicon_cue": "which.*should i", "note": ""}
+{"id": "ref_10", "query": "Is HDFC Flexi Cap worth buying?", "expected_class": "opinionated", "lexicon_cue": "worth buying", "note": ""}
+{"id": "ref_11", "query": "Is HDFC Large Cap a good buy?", "expected_class": "opinionated", "lexicon_cue": "", "note": "no stated lexicon entry; must reach the residual stage and still land on opinionated"}
+{"id": "ref_12", "query": "any advice on which of these HDFC funds to hold for the long term?", "expected_class": "opinionated", "lexicon_cue": "", "note": "residual stage; 'hdfc' is a multi-scheme token, so the query is in scope and the model has to classify it as opinionated"}
+{"id": "ref_13", "query": "How much should I invest in HDFC Large Cap?", "expected_class": "portfolio_personal", "lexicon_cue": "how much should i invest", "note": "contains the substring 'should i' but the allocation lexicon is the specific rule; portfolio is checked before opinionated"}
+{"id": "ref_14", "query": "Is my portfolio balanced?", "expected_class": "portfolio_personal", "lexicon_cue": "my portfolio", "note": ""}
+{"id": "ref_15", "query": "What asset allocation should I have?", "expected_class": "portfolio_personal", "lexicon_cue": "asset allocation", "note": "also matches 'should i'; allocation wins on specificity"}
+{"id": "ref_16", "query": "Should my equity ratio be 60/40?", "expected_class": "portfolio_personal", "lexicon_cue": "equity.*ratio", "note": ""}
+{"id": "ref_17", "query": "I am 28, what is my risk profile?", "expected_class": "portfolio_personal", "lexicon_cue": "risk profile", "note": ""}
+{"id": "ref_18", "query": "Help me plan for my retirement corpus", "expected_class": "portfolio_personal", "lexicon_cue": "retirement", "note": ""}
+{"id": "ref_19", "query": "I want to invest for my child education plan", "expected_class": "portfolio_personal", "lexicon_cue": "child.*plan", "note": ""}
+{"id": "ref_20", "query": "Is my asset allocation too aggressive?", "expected_class": "portfolio_personal", "lexicon_cue": "asset allocation", "note": ""}
+{"id": "ref_21", "query": "Any guidance on goal planning for a house purchase?", "expected_class": "portfolio_personal", "lexicon_cue": "goal planning", "note": ""}
+{"id": "ref_22", "query": "How much should I invest from my salary each month?", "expected_class": "portfolio_personal", "lexicon_cue": "how much should i invest", "note": ""}
+{"id": "ref_23", "query": "am I saving enough for my retirement", "expected_class": "portfolio_personal", "lexicon_cue": "retirement", "note": "no opinion lexicon entry; allocation lexicon still owns it"}
+{"id": "ref_24", "query": "Should I switch my existing portfolio to a balanced fund?", "expected_class": "portfolio_personal", "lexicon_cue": "my portfolio", "note": "genuinely ambiguous; the allocation rule is the more specific of the two"}

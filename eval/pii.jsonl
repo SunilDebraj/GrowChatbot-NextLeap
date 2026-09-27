@@ -1,0 +1,12 @@
+{"id": "pii_01", "query": "my PAN is ABCDE1234F", "expect_pii": true, "expect_categories": ["pan"], "note": "strict PAN"}
+{"id": "pii_02", "query": "my pan is XXXXX1234X, what is the exit load?", "expect_pii": true, "expect_categories": ["pan"], "note": "masked PAN, embedded in a real question"}
+{"id": "pii_03", "query": "aadhaar 2345 6789 0123", "expect_pii": true, "expect_categories": ["aadhaar"], "note": "spaced Aadhaar"}
+{"id": "pii_04", "query": "my aadhaar number is 234567890123", "expect_pii": true, "expect_categories": ["aadhaar"], "note": "plain 12-digit Aadhaar, leading digit 2-9"}
+{"id": "pii_05", "query": "account number 1234567890", "expect_pii": true, "expect_categories": ["account"], "note": "10 consecutive digits"}
+{"id": "pii_06", "query": "1234-5678-9012 is my folio number", "expect_pii": true, "expect_categories": ["account"], "note": "dash-grouped account"}
+{"id": "pii_07", "query": "123456789012 is my account", "expect_pii": true, "expect_categories": ["account"], "note": "12 digits starting with 1, so not Aadhaar; long-account rule owns it"}
+{"id": "pii_08", "query": "mail me at priya.sharma@example.com", "expect_pii": true, "expect_categories": ["email"], "note": "email address"}
+{"id": "pii_09", "query": "call me on +91 98765 43210", "expect_pii": true, "expect_categories": ["phone"], "note": "+91 international phone"}
+{"id": "pii_10", "query": "9876543210", "expect_pii": true, "expect_categories": ["phone"], "note": "bare 10-digit phone; phone:local is declared before account:ten so it wins"}
+{"id": "pii_11", "query": "my otp is 482913", "expect_pii": true, "expect_categories": ["otp"], "note": "OTP with the keyword that makes 6 bare digits sensitive"}
+{"id": "pii_12", "query": "my PAN ABCDE1234F, what is the expense ratio of HDFC Large Cap Fund?", "expect_pii": true, "expect_categories": ["pan"], "note": "PII embedded inside an otherwise answerable question; the whole query is discarded, not the PAN alone"}

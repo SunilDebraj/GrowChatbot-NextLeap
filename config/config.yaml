@@ -1,0 +1,94 @@
+# MF-Facts-Bot configuration.
+# Transcribed from architecture.md section 8. Every threshold in the project lives
+# here, never in code. Unknown keys are rejected at load time.
+
+corpus:
+  name: mf_facts
+  collection: mf_facts_v1
+  raw_cache_dir: raw_cache
+  embedding_cache_dir: cache/embeddings
+
+embedding:
+  model_id: sentence-transformers/all-MiniLM-L6-v2
+  # all-MiniLM-L6-v2 truncates its input at 256 wordpiece tokens. max_chunk_tokens
+  # below is 86% of that limit so a chunk is never silently clipped by the model.
+  embedding_dim: 384
+  batch_size: 32
+  normalize: true
+
+chunking:
+  # heading_aware | fixed_window | atomic_fact
+  # Locked by the P2 evaluation gate, not by this file. See docs/chunking_decision.md.
+  # P2 gate run 2026-09-27: heading_aware wins on the architecture.md 7.2 tie-break
+  # (table_fact_accuracy tied with fixed_window at 100%). atomic_fact rejected at
+  # 45% table_fact_accuracy and 15 chunks vs 20 - it drops every riskometer doc.
+  strategy: heading_aware
+  max_chunk_tokens: 220
+  target_tokens: 160
+  overlap_ratio: 0.15
+  protect_tables: true
+  repeat_table_headers: true
+
+retrieval:
+  top_k: 12
+  top_n: 4
+  rrf_k: 60
+  doc_class_boost: 0.15
+  section_match_boost: 0.10
+  numeric_anchor_boost: 0.10
+
+grounding:
+  min_relevance: 0.15
+  require_fact_anchor: true
+
+generation:
+  # OQ2 is resolved: an OpenAI-compatible /chat/completions endpoint, named by
+  # the wire shape it speaks rather than by a vendor, so swapping the endpoint is
+  # a config edit and not a code change. No provider is hardcoded anywhere.
+  provider: "chat_completions"
+  model: "qwen/qwen3.8-27b"
+  # The key is NOT here. It lives in .env (gitignored) as MF_FACTS_LLM_API_KEY and
+  # is read into the environment by common/env.py - implementation.md 2.3.
+  api_key_env: "MF_FACTS_LLM_API_KEY"
+  base_url: "https://api.groq.com/openai/v1/chat/completions"
+  timeout_s: 60.0
+  temperature: 0.0
+  max_tokens: 180
+  max_sentences: 3
+
+safety:
+  pii_scan_enabled: true
+  log_raw_queries: false
+  pii_categories: [pan, aadhaar, account, otp, email, phone]
+  # Added in P1 after inspecting the live corpus: the scheme pages carry a
+  # "Returns and rankings" / "Return calculator" / "Compare similar funds" region
+  # containing real return figures. Ingesting it would place return numbers one
+  # retrieval away from the generator, contradicting driver D5 and rule GR6.
+  performance_exclude_patterns:
+    - "return calculator"
+    - "returns and rankings"
+    - "compare similar funds"
+    - "fund returns"
+    - "category average"
+    - "annualised returns"
+    - "absolute returns"
+    - "rank ("
+
+ui:
+  examples:
+    - "What is the exit load on HDFC Large Cap Fund?"
+    - "Is there a lock-in period on the HDFC ELSS Tax Saver Fund?"
+    - "How do I download my capital gains statement?"
+  disclaimer_file: assets/disclaimer.txt
+
+api:
+  # P5-T4 rate and size guards. Deliberately trivial: this is a demoable
+  # prototype with no auth, no sessions and no history (Known Limit #6), so the
+  # limit exists to stop a runaway client, not to meter a service.
+  max_question_length: 400
+  max_body_bytes: 8192
+  rate_limit_requests: 20
+  rate_limit_window_s: 60
+  host: 127.0.0.1
+  port: 8000
+

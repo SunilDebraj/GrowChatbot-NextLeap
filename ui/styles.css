@@ -1,0 +1,133 @@
+:root {
+  --ink: #1b2430;
+  --muted: #5b6b7c;
+  --line: #d7dee6;
+  --bg: #f6f8fa;
+  --card: #ffffff;
+  --accent: #0b5cab;
+  --refusal: #7a4b00;
+  --refusal-bg: #fff6e6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 1rem 3rem;
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+main, header, footer { max-width: 46rem; margin: 0 auto; }
+
+.banner { padding: 1.75rem 0 0.5rem; }
+.banner h1 { margin: 0; font-size: 1.4rem; }
+.banner p { margin: 0.35rem 0 0; color: var(--muted); }
+
+/* The persistent facts-only note (PRD FR7). Loud enough to survive being
+   scrolled past, quiet enough not to look like an error. */
+.facts-only {
+  margin: 1rem auto;
+  padding: 0.55rem 0.85rem;
+  border-left: 4px solid var(--accent);
+  background: var(--card);
+  font-weight: 600;
+}
+
+.examples h2 { margin: 1.5rem 0 0.5rem; font-size: 0.95rem; color: var(--muted); }
+
+.example {
+  display: block;
+  width: 100%;
+  margin: 0 0 0.4rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--accent);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.example:hover { border-color: var(--accent); }
+.example:focus-visible, #ask-button:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#ask-form { display: flex; gap: 0.5rem; margin-top: 1.25rem; align-items: stretch; }
+
+textarea {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+  resize: vertical;
+}
+
+#ask-button {
+  padding: 0 1.4rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+#ask-button[disabled] { opacity: 0.55; cursor: progress; }
+
+.reminder { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.85rem; }
+
+.thread { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.thread:empty { display: none; }
+
+.bubble {
+  margin: 0;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  max-width: 42rem;
+  overflow-wrap: anywhere;
+}
+
+.bubble.user { align-self: flex-end; background: #e8f0fa; }
+.bubble.pending, .bubble.notice { color: var(--muted); font-style: italic; }
+
+.bubble.answer.refusal { border-color: #e6c48a; background: var(--refusal-bg); }
+.bubble .body { margin: 0; white-space: pre-wrap; }
+
+.citation { display: inline-block; margin-top: 0.5rem; font-size: 0.9rem; }
+.stamp { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.8rem; }
+.refusal-footer {
+  margin: 0.6rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e6c48a;
+  color: var(--refusal);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.disclaimer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.disclaimer p { margin: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
