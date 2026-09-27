@@ -140,6 +140,20 @@ three endpoints: `GET /api/health`, `GET /api/examples`, `POST /api/ask`. It
 has no accounts, sessions or history, and a per-IP rate limit. A provider or
 Chroma failure returns `503 service_unavailable`, never a traceback.
 
+## Deploying on Render
+
+`render.yaml` is a Render blueprint. In the Render dashboard choose
+**New → Blueprint**, select this repository, and enter the secret
+`MF_FACTS_LLM_API_KEY` when prompted. The build installs CPU-only torch, builds
+the corpus (it fetches the five scheme pages and downloads the embedding model),
+and the service starts with `python -m api --host 0.0.0.0 --port $PORT`.
+`/api/health` is the health check.
+
+The free plan has 512 MB of memory, which torch, the embedding model and Chroma
+may exceed. If the service is killed for memory, move to a larger instance. If
+Render cannot reach groww.in, the build fails rather than deploying an empty
+corpus.
+
 ## Running the tests and the eval harness
 
 **Build the corpus before running the tests.** 18 answer-path tests query the

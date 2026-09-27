@@ -26,3 +26,6 @@ chroma/
 # Generated deliverables are committed; transient build output is not
 artifacts/*.tmp
 artifacts/_raw
+
+# Hugging Face model cache (Render build: HF_HOME)
+.hf_cache/

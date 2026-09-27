@@ -620,3 +620,40 @@ def test_the_real_pipeline_answers_through_the_api():
     assert response.status_code == 200
     assert body["route"] in ("answer", "safe_response", "refusal")
     assert body["answer"].strip(), "an answered request must carry text"
+
+
+# -- the served entrypoint ----------------------------------------------------
+
+
+def _served_app(monkeypatch, argv: list[str]) -> FactsApp:
+    """Run ``api.app.main`` with uvicorn stubbed out and return the app it serves."""
+    import sys
+    import types
+
+    from api import app as app_module
+
+    served: dict[str, Any] = {}
+    stub = types.ModuleType("uvicorn")
+    stub.run = lambda app, **kwargs: served.setdefault("app", app)
+    monkeypatch.setitem(sys.modules, "uvicorn", stub)
+    assert app_module.main(argv) == 0
+    return served["app"]
+
+
+def test_served_app_resolves_the_provider_from_config(monkeypatch):
+    # Regression: main() once passed an explicit llm=None, which build_app treats
+    # as "no LLM, fail closed" - so `python -m api` refused every question that
+    # needed the residual classifier or the generator, while /api/health still
+    # reported the configured provider.
+    monkeypatch.setenv("MF_FACTS_LLM_API_KEY", "test-key-not-real")
+    app = _served_app(monkeypatch, ["--port", "1"])
+    assert app.pipeline.llm is not None
+    assert app.pipeline.classifier.llm is not None
+    assert app.pipeline.generator.available
+
+
+def test_served_app_with_fake_uses_the_fake(monkeypatch):
+    from mf_facts.online.generator import FakeLLM
+
+    app = _served_app(monkeypatch, ["--port", "1", "--fake"])
+    assert isinstance(app.pipeline.llm, FakeLLM)

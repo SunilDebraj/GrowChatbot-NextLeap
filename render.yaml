@@ -1,0 +1,32 @@
+# Render blueprint for the MF-Facts-Bot prototype (PRD 10.1, OQ5).
+#
+# The corpus (chroma/, raw_cache/, cache/) is gitignored, so it is built during
+# the deploy: the build fetches the five groww.in scheme pages and downloads
+# all-MiniLM-L6-v2. If a page cannot be fetched the build fails loudly rather
+# than publishing a partial corpus (architecture 6.1).
+services:
+  - type: web
+    name: mf-facts-bot
+    runtime: python
+    plan: free
+    buildCommand: >-
+      pip install --upgrade pip &&
+      pip install torch --index-url https://download.pytorch.org/whl/cpu &&
+      pip install -e ".[serve]" &&
+      python -m mf_facts.pipeline.build --strategy heading_aware
+    startCommand: python -m api --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      # Keep the model inside the project directory: only files under it
+      # survive from the build into the running service.
+      - key: HF_HOME
+        value: /opt/render/project/src/.hf_cache
+      # Render's proxy is the direct peer; trust its X-Forwarded-For so the
+      # per-IP rate limit keys on the real client, not on the shared proxy.
+      - key: FORWARDED_ALLOW_IPS
+        value: "*"
+      # Set in the Render dashboard. Never committed.
+      - key: MF_FACTS_LLM_API_KEY
+        sync: false

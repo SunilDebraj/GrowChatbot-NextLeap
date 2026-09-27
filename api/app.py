@@ -635,15 +635,21 @@ def main(argv: Iterable[str] | None = None) -> int:
     host = args.host or probe.api.host
     port = args.port or probe.api.port
 
-    llm = None
+    # ``llm`` is three-state (see build_app): passing an explicit None would mean
+    # "no LLM, fail closed" and silently turn every served answer into a refusal.
+    # Without --fake it must be omitted so the provider resolves from config.
     if args.fake:
         from mf_facts.online.generator import FakeLLM
 
-        llm = FakeLLM(
-            model=probe.generation.model or "fake-extractive",
-            max_sentences=int(probe.generation.max_sentences),
+        app = build_app(
+            allow_fake=True,
+            llm=FakeLLM(
+                model=probe.generation.model or "fake-extractive",
+                max_sentences=int(probe.generation.max_sentences),
+            ),
         )
-    app = build_app(allow_fake=args.fake, llm=llm)
+    else:
+        app = build_app()
 
     try:
         import uvicorn
