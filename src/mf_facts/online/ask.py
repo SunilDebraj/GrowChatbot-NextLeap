@@ -29,9 +29,10 @@ Three properties are structural rather than requested in a prompt:
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass
+import re
+from dataclasses import dataclass, replace
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
 from ..common.config import AppConfig, load_config
 from ..common.logging import log_event
@@ -57,6 +58,15 @@ FOOTER = "Facts-only. No investment advice."
 #: Distinguishes "llm was not passed" from "llm is explicitly None". See
 #: ``AnswerPipeline.build``.
 _UNSET: Any = object()
+
+#: A question that refers back to an earlier one without naming the scheme.
+#: Together with a doc-class hint, this is what makes a question a follow-up;
+#: an unrelated question ("what's the weather?") gets no scheme carried into it.
+_FOLLOW_UP_REFERENT = re.compile(
+    r"\b(?:it|its|this|that|same|the\s+(?:fund|scheme)|this\s+(?:fund|scheme)|"
+    r"that\s+(?:fund|scheme)|what\s+about|and\s+the)\b",
+    re.IGNORECASE,
+)
 
 
 def _query_hash(query: str) -> str:
@@ -156,7 +166,16 @@ class AnswerPipeline:
 
     # -- the pipeline -------------------------------------------------------
 
-    def ask(self, query: str) -> AskResponse:
+    def ask(self, query: str, history: Sequence[str] = ()) -> AskResponse:
+        """Answer one question, optionally carrying a scheme from ``history``.
+
+        ``history`` is the client's previous questions, oldest first, capped at
+        ``memory.window_turns``. It is used for one thing only: when ``query``
+        names no scheme and reads as a follow-up, the most recent scheme named in
+        ``history`` is appended to it, by canonical name. History text never
+        reaches the classifier, the retriever, a prompt or a log, and any history
+        item containing PII is dropped unread.
+        """
         pii = self.pii_scanner.scan(query)
 
         if pii.is_pii:
@@ -175,6 +194,7 @@ class AnswerPipeline:
                 query,
             )
 
+        pii = self._with_carried_scheme(pii, history)
         classification = self.classifier.classify(pii.sanitized_query, pii)
         query_class = classification.query_class
 
@@ -182,6 +202,25 @@ class AnswerPipeline:
             return self._refuse(query, query_class, classification.rule_id, pii, classification.confidence)
 
         return self._answer(query, pii, classification, query_class)
+
+    def _with_carried_scheme(self, pii: PiiResult, history: Sequence[str]) -> PiiResult:
+        """Append the most recent scheme from ``history`` to a scheme-less follow-up."""
+        window = int(self.config.memory.window_turns)
+        question = pii.sanitized_query
+        if not window or not history or self.rewriter.has_scheme_token(question):
+            return pii
+        if not (
+            self.rewriter.doc_class_hints(question) or _FOLLOW_UP_REFERENT.search(question)
+        ):
+            return pii
+        for earlier in reversed(list(history)[-window:]):
+            if not isinstance(earlier, str) or self.pii_scanner.scan(earlier).is_pii:
+                continue
+            keys = self.rewriter.resolve_scheme_keys(earlier)
+            if keys:
+                names = " and ".join((self.scheme_names or {}).get(k, k) for k in keys)
+                return replace(pii, sanitized_query=f"{question} ({names})")
+        return pii
 
     def _refuse(
         self,

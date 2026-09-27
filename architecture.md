@@ -584,7 +584,7 @@ Deterministic checks:
 **Notes.**
 - The 3 example questions are fixed in config, drawn from the three highest-frequency categories (exit load, lock-in, statement download) — they demo refusal-safety by including none of the risky phrasing, while the README shows refusal examples.
 - Disclaimer is rendered on every page load, not behind a link (PRD §10.5).
-- No auth, no sessions, no persistence of conversation history (Known Limit #6). Single-turn by design.
+- No auth, no sessions, no persistence of conversation history (Known Limit #6). *Amended 2026-09-27:* the client may send up to `memory.window_turns` previous questions per request; the server uses them only to carry a scheme into a follow-up and stores nothing.
 
 ---
 

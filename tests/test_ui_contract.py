@@ -293,11 +293,21 @@ def test_there_is_no_comparison_table(page):
     assert "<table" not in page.lower()
 
 
-def test_there_is_no_conversation_history(page, script):
-    """Known Limit #6, and a P5 pitfall: no history, no scheme carry-over."""
+def test_conversation_memory_is_never_persisted(page, script):
+    """Known Limit #6 as amended 2026-09-27: the page may remember recent
+    questions, but only in a variable - never in browser storage or a cookie."""
     assert "localStorage" not in script
     assert "sessionStorage" not in script
-    assert "history" not in script.lower()
+    assert "indexedDB" not in script
+    assert "document.cookie" not in script
+
+
+def test_conversation_memory_is_bounded_by_the_configured_window(page, script):
+    window = load_config(REPO_ROOT / "config" / "config.yaml").memory.window_turns
+    assert f'data-memory-turns="{window}"' in page
+    assert 'getAttribute("data-memory-turns")' in script
+    # A question the server flagged as PII is never remembered (PRD FR6).
+    assert 'payload["class"] === "pii"' in script
 
 
 def test_the_page_loads_no_third_party_resource(page):

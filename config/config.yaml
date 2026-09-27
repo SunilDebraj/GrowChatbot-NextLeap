@@ -81,12 +81,21 @@ ui:
     - "How do I download my capital gains statement?"
   disclaimer_file: assets/disclaimer.txt
 
+memory:
+  # Conversation memory (overrides PRD Known Limit #6 at the owner's request,
+  # 2026-09-27). The client sends up to this many previous questions with each
+  # request; they are used ONLY to carry a scheme into a follow-up such as
+  # "and the exit load?". Never stored, never logged, never put in a prompt.
+  # 0 turns it off.
+  window_turns: 10
+
 api:
   # P5-T4 rate and size guards. Deliberately trivial: this is a demoable
   # prototype with no auth, no sessions and no history (Known Limit #6), so the
   # limit exists to stop a runaway client, not to meter a service.
   max_question_length: 400
-  max_body_bytes: 8192
+  # Room for the question plus memory.window_turns previous questions.
+  max_body_bytes: 16384
   rate_limit_requests: 20
   rate_limit_window_s: 60
   host: 127.0.0.1

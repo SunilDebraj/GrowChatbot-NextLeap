@@ -369,7 +369,7 @@ Setup steps · architecture and RAG stage walkthrough (with the chunking decisio
 3. **Aggregator-hosted pages.** The five listed URLs are aggregator-hosted republishing of AMC data. A page layout change upstream can break ingestion until selectors are updated.
 4. **PDF dependence.** Factsheets, KIM, and SID are PDFs; table extraction from them is imperfect and is a known source of chunk quality issues.
 5. **MiniLM trade-off.** `all-MiniLM-L6-v2` is fast and local but weaker than larger models on finance-specific phrasing; expect occasional misses on unusual wording.
-6. **No memory.** Single-turn only. Follow-up questions like "and the exit load?" will not resolve the scheme.
+6. **Short, scheme-only memory.** *(Amended 2026-09-27 at the owner's request; was "single-turn only".)* The page keeps the last 10 questions in browser memory, not storage, and sends them with each question. They are used only to carry a scheme into a follow-up like "and the exit load?". Nothing is stored server-side, history never enters a prompt or a log, and a reload forgets it.
 7. **No evaluation of fund quality.** Deliberately. Quality judgment is out of scope by design.
 8. **English only, Indian regulatory framing.** No regional languages; no non-MF products (bonds, insurance, PMS).
 

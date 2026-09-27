@@ -26,6 +26,23 @@
 
   var MD_LINK = /\[([^\]]*)\]\(([^)]*)\)/g;
 
+  /* Conversation memory. The last N questions live in this variable only - no
+   * browser storage, no cookie - so a reload forgets them. They are sent with
+   * each question so the server can carry a scheme into a follow-up ("and the
+   * exit load?"). A question the server flagged as PII is never kept. */
+  var MEMORY_TURNS = parseInt(form.getAttribute("data-memory-turns") || "0", 10) || 0;
+  var history = [];
+
+  function remember(question, payload) {
+    if (!MEMORY_TURNS || (payload && payload["class"] === "pii")) {
+      return;
+    }
+    history.push(question);
+    if (history.length > MEMORY_TURNS) {
+      history = history.slice(history.length - MEMORY_TURNS);
+    }
+  }
+
   function addUser(text) {
     var el = document.createElement("p");
     el.className = "bubble user";
@@ -110,7 +127,7 @@
     fetch("/api/ask", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ question: question }),
+      body: JSON.stringify({ question: question, history: history.slice() }),
     })
       .then(function (response) {
         return response.json().then(function (data) {
@@ -121,6 +138,7 @@
         pending.remove();
         if (result.ok) {
           addAnswer(result.data);
+          remember(question, result.data);
         } else {
           // The API already sent a safe, human sentence. Show it as-is; never
           // invent error copy here that could disagree with it.

@@ -119,6 +119,18 @@ class APIConfig:
 
 
 @dataclass(frozen=True, slots=True)
+class MemoryConfig:
+    """Short conversation memory, used only to carry a scheme into a follow-up.
+
+    The window is the number of previous questions the client may send. Nothing
+    is stored server-side: the history arrives with each request and is dropped
+    when the request ends.
+    """
+
+    window_turns: int = 10
+
+
+@dataclass(frozen=True, slots=True)
 class AppConfig:
     corpus: CorpusConfig
     embedding: EmbeddingConfig
@@ -130,6 +142,7 @@ class AppConfig:
     ui: UIConfig
     api: APIConfig
     root: Path
+    memory: MemoryConfig = field(default_factory=MemoryConfig)
     raw: dict[str, Any] = field(default_factory=dict)
 
 
@@ -359,6 +372,12 @@ def load_config(path: str | Path) -> AppConfig:
     if api.rate_limit_requests < 1 or api.rate_limit_window_s < 1:
         raise ConfigError("api: rate_limit_requests and rate_limit_window_s must be positive")
 
+    memory_raw = _require_mapping(root.get("memory"), "memory")
+    _strict(memory_raw, ("window_turns",), "memory")
+    memory = MemoryConfig(window_turns=_get(memory_raw, "window_turns", 10, cast=int))
+    if memory.window_turns < 0:
+        raise ConfigError("memory: window_turns must be zero (off) or positive")
+
     # A half-configured provider is caught here rather than on the first request.
     # Otherwise the service boots, answers every question with a refusal, and the
     # operator has no idea whether the provider is down or the config is short.
@@ -389,5 +408,6 @@ def load_config(path: str | Path) -> AppConfig:
         ui=ui,
         api=api,
         root=config_path.resolve().parent.parent,
+        memory=memory,
         raw=root,
     )

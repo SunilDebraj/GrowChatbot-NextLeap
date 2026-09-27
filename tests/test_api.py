@@ -143,9 +143,11 @@ class StubPipeline:
         self.error = error
         self.retriever = StubRetriever(StubStore(count))
         self.questions: list[str] = []
+        self.histories: list[tuple[str, ...]] = []
 
-    def ask(self, question: str) -> AskResponse:
+    def ask(self, question: str, history: Any = ()) -> AskResponse:
         self.questions.append(question)
+        self.histories.append(tuple(history))
         if self.error is not None:
             raise self.error
         return self.response
@@ -657,3 +659,36 @@ def test_served_app_with_fake_uses_the_fake(monkeypatch):
 
     app = _served_app(monkeypatch, ["--port", "1", "--fake"])
     assert isinstance(app.pipeline.llm, FakeLLM)
+
+
+# -- conversation memory ------------------------------------------------------
+
+
+def test_history_is_forwarded_capped_to_the_window():
+    stub = StubPipeline()
+    client = make_client(stub)
+    history = [f"earlier question {i}" for i in range(15)]
+    assert client.post("/api/ask", json={"question": "and the exit load?", "history": history}).status_code == 200
+    window = load_config(REPO_ROOT / "config" / "config.yaml").memory.window_turns
+    assert stub.histories[-1] == tuple(history[-window:])
+
+
+def test_missing_history_means_no_history():
+    stub = StubPipeline()
+    make_client(stub).ask()
+    assert stub.histories[-1] == ()
+
+
+def test_malformed_history_entries_are_skipped_not_fatal():
+    stub = StubPipeline()
+    body = {"question": "and the exit load?", "history": ["ok one", 7, "", None, "x" * 5000, "ok two"]}
+    assert make_client(stub).post("/api/ask", json=body).status_code == 200
+    assert stub.histories[-1] == ("ok one", "ok two")
+
+
+def test_history_that_is_not_a_list_is_a_bad_request():
+    stub = StubPipeline()
+    body = {"question": "and the exit load?", "history": "HDFC Small Cap"}
+    response = make_client(stub).post("/api/ask", json=body)
+    assert response.status_code == 400
+    assert stub.questions == []

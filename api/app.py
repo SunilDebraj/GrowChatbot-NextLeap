@@ -336,9 +336,20 @@ class FactsApp:
             )
             return
 
+        history = _parse_history(
+            raw, self.config.memory.window_turns, self.config.api.max_question_length
+        )
+        if history is None:
+            await self._json(
+                send,
+                400,
+                {"error": {"code": "invalid_request", "message": '"history" must be a list of previous questions.'}},
+            )
+            return
+
         started = time.perf_counter()
         try:
-            response = self.pipeline.ask(question)
+            response = self.pipeline.ask(question, history)
         except Exception as exc:  # noqa: BLE001
             # Chroma or provider failure. The client gets no answer text, because
             # there is no validated text to give.
@@ -511,6 +522,31 @@ def _parse_question(raw: bytes) -> str | None:
     return question or None
 
 
+def _parse_history(raw: bytes, window: int, max_length: int) -> tuple[str, ...] | None:
+    """The client's previous questions, newest last, capped at ``window``.
+
+    Absent means no history. A ``history`` that is not a list is a bad request
+    (None). Non-string, empty or over-long entries are skipped rather than
+    rejected: memory is a convenience, and a malformed turn should cost the
+    follow-up its context, not the user their answer. Nothing here is stored.
+    """
+    try:
+        payload = json.loads(raw.decode("utf-8") or "{}")
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return ()
+    history = payload.get("history", []) if isinstance(payload, dict) else []
+    if not isinstance(history, list):
+        return None
+    if window <= 0:
+        return ()
+    kept = [
+        item.strip()
+        for item in history
+        if isinstance(item, str) and item.strip() and len(item.strip()) <= max_length
+    ]
+    return tuple(kept[-window:])
+
+
 # --------------------------------------------------------------------------
 # the page
 # --------------------------------------------------------------------------
@@ -559,7 +595,7 @@ def _render_page(config: AppConfig, disclaimer: str) -> bytes:
 {examples}
   </section>
 
-  <form id="ask-form" autocomplete="off">
+  <form id="ask-form" autocomplete="off" data-memory-turns="{int(config.memory.window_turns)}">
     <label class="sr-only" for="question">Your question</label>
     <textarea id="question" name="question" rows="2" maxlength="{config.api.max_question_length}"
       placeholder="{html.escape(NO_PII_REMINDER, quote=True)}" required></textarea>

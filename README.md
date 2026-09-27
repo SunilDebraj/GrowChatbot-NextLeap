@@ -199,8 +199,12 @@ free-tier providers with a tokens-per-minute cap. The eval sets are data, in
 5. **MiniLM trade-off.** `all-MiniLM-L6-v2` is fast and local but weaker than
    larger models on finance-specific phrasing. Expect occasional misses on
    unusual wording.
-6. **No memory.** Single-turn only. A follow-up such as "and the exit load?"
-   does not resolve the scheme.
+6. **Short, scheme-only memory.** The page remembers your last 10 questions
+   (`memory.window_turns`) in the browser tab only, and uses them for one
+   thing: a follow-up such as "and the exit load?" inherits the most recently
+   named scheme. Nothing is stored on the server, history never reaches the
+   model or the logs, and a question containing PII is never remembered. A
+   reload forgets everything.
 7. **No evaluation of fund quality.** Deliberately. Judging quality is out of
    scope by design.
 8. **English only, Indian regulatory framing.** No regional languages and no

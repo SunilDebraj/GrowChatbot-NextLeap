@@ -596,7 +596,7 @@ Notes from the build, for whoever picks this up next:
 
 ### Pitfalls
 
-- **No conversation history.** Tempting to add, but it contradicts Known Limit #6 and would require scheme carry-over in the rewriter. Out of scope.
+- **No conversation history.** Tempting to add, but it contradicts Known Limit #6 and would require scheme carry-over in the rewriter. Out of scope. *Superseded 2026-09-27: the owner asked for a 10-turn memory. Shipped as scheme carry-over only, with a stateless server: the client sends its history, `AnswerPipeline._with_carried_scheme` appends the canonical scheme name to a scheme-less follow-up, and PII history items are dropped. See `tests/test_memory.py` and PRD Known Limit #6.*
 - **The 3 examples are fixed in config** — do not randomize or rotate them. The demo depends on them being the 3 high-frequency categories.
 - **Don't show `route` as the primary user-facing label.** Exposing internal class names invites confusion about what a refusal means.
 - **If the demo must be hosted, resolve OQ5 here, not in P6.**
